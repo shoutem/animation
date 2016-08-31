@@ -1,0 +1,57 @@
+{
+  "name": "@shoutem/animation",
+  "version": "0.8.0",
+  "description": "Shoutem Animation Library",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:shoutem/animation.git"
+  },
+  "dependencies": {
+    "lodash": "^4.15.0"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0",
+    "react-native": ">=0.28.0"
+  },
+  "keywords": [
+    "React",
+    "Native",
+    "Animation"
+  ],
+  "homepage": "http://shoutem.github.io/docs/ui-toolkit/introduction",
+  "bugs": {
+    "url": "https://github.com/shoutem/ui/issues"
+  },
+  "license": "BSD-3-Clause",
+  "maintainers": [
+    {
+      "email": "bruna.andjelic@gmail.com",
+      "name": "bAndelic"
+    },
+    {
+      "email": "belma.dzi@gmail.com",
+      "name": "morrigan"
+    },
+    {
+      "email": "luka.bracanovic@shoutem.com",
+      "name": "MrBr"
+    },
+    {
+      "email": "ivan@shoutem.com",
+      "name": "SoHotSoup"
+    },
+    {
+      "email": "tomislav.tenodi@shoutem.com",
+      "name": "tenodi"
+    },
+    {
+      "email": "vladimir@shoutem.com",
+      "name": "Vunovati"
+    },
+    {
+      "email": "zeljko@shoutem.com",
+      "name": "zrumenjak"
+    }
+  ]
+}
