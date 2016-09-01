@@ -12,12 +12,12 @@ npm install --save @shoutem/animation
 
 ## Docs
 
-All the documentation is available on the [Developer portal](http://shoutem.github.io/docs/ui-toolkit/animation/animations).
+All the documentation is available on the [Developer portal](http://shoutem.github.io/docs/ui-toolkit/animation/introduction).
 
 
 ## Examples
 
-To see animation components in action, check the application in the `examples` folder.
+To see animation components in action, take a loot at the application in the `examples` folder.
 
 ```bash
 git clone git@github.com:shoutem/animation.git
