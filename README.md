@@ -31,12 +31,16 @@ But feel the full power of this package with `connectAnimation` higher order com
 Create your component
 
 ```javascript
-
+import { Text, View } from 'react-native'; 
 import { connectAnimation } from '@shoutem/animation'
 
 class MyComponent extends Component {
   render() {
-  ...
+    return (
+      <View {...this.props}>
+        <Text>Look! I'm animated!</Text>
+      </View>
+    );
   }
 }
 
@@ -71,30 +75,35 @@ Use it on some screen by passing it a driver
 
 
 ```javascript
-...
+import { ScrollView } from 'react-native';
+import { MyComponent } from './MyComponent';
+
 class Screen extends Components {
   render() {
     const driver = new ScrollDriver();
     return (
       <ScrollView {...driver.scrollViewProps}>
-        <MyComponent animationName="hero" driver={driver} />
+        <MyComponent animationName="solidify" driver={driver} />
+        <MyComponent animationName="fadeOut" driver={driver} />
       </ScrollView>
     );
   }
 }
 ```
 
-But could shorten this even more by using ScrollView from @shoutem/ui which handles and create drivers for you
+But we could shorten this even more by using ScrollView from @shoutem/ui which handles and create drivers for you
 
 ```javascript
 ...
 import { ScrollView } from '@shoutem/ui';
+import { MyComponent } from './MyComponent';
 
 class Screen extends Components {
   render() {
     return (
       <ScrollView>
-        <MyComponent animationName="hero" />
+        <MyComponent animationName="solidify" />
+        <MyComponent animationName="fadeOut" />
       </ScrollView>
     );
   }
