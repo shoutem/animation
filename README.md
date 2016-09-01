@@ -38,7 +38,7 @@ class MyComponent extends Component {
   render() {
     return (
       <View {...this.props}>
-        <Text>Look! I'm animated!</Text>
+        <Text>Look! I am animated!</Text>
       </View>
     );
   }
