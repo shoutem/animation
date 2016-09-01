@@ -66,7 +66,7 @@ const AnimatedComponent = connectAnimation(MyComponent, {
 });
 
 export {
-AnimatedMyComponent as MyComponent,
+  AnimatedMyComponent as MyComponent,
 }
 
 ```
