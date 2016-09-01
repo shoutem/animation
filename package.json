@@ -1,6 +1,6 @@
 {
   "name": "@shoutem/animation",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Shoutem Animation Library",
   "main": "index.js",
   "repository": {
@@ -8,6 +8,7 @@
     "url": "git+ssh://git@github.com:shoutem/animation.git"
   },
   "dependencies": {
+    "hoist-non-react-statics": "^1.2.0",
     "lodash": "^4.15.0"
   },
   "peerDependencies": {
