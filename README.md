@@ -50,8 +50,8 @@ import {
 
 class HelloWorld extends Component {
   render() {
-    // create new ScrollDriver for animations that will animate them between
-    // passed scroll positions in input range
+    // create new ScrollDriver that will animate animations when passing
+    // through scroll positions in input range
     const driver = new ScrollDriver();
     return (
       <ScrollView {...driver.scrollViewProps}>
