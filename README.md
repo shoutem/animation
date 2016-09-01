@@ -30,7 +30,7 @@ $ cd HelloWorld
 $ npm install --save @shoutem/animation
 ```
 
-Now, simply copy the following to your `index.ios.js` or `index.android.js` file of React Native project:
+Now, simply copy the following to your `index.ios.js` file of React Native project:
 
 ```javascript
 import React, { Component } from 'react';
@@ -86,7 +86,6 @@ Finally, run the app!
 
 ```bash
 $ react-native run-ios
-$ react-native run-android
 ```
 
 For more complex animations, run application from `examples` folder:
