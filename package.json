@@ -1,6 +1,6 @@
 {
   "name": "@shoutem/animation",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Shoutem Animation Library",
   "main": "index.js",
   "repository": {
@@ -19,9 +19,9 @@
     "Native",
     "Animation"
   ],
-  "homepage": "http://shoutem.github.io/docs/ui-toolkit/introduction",
+  "homepage": "http://http://shoutem.github.io/docs/ui-toolkit/animation/introduction",
   "bugs": {
-    "url": "https://github.com/shoutem/ui/issues"
+    "url": "https://github.com/shoutem/animation/issues"
   },
   "license": "BSD-3-Clause",
   "maintainers": [

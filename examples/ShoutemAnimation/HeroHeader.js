@@ -54,16 +54,17 @@ export default class HeroHeaderExample extends Component {
             padding: 15,
           }}
         >
-            <Text>
-              Gaspar is a delightful French restaurant in
-              San Francisco’s Financial District that is inspired by the romantic,
-              bustling Paris of old. Located near famed Union Square, our richly-designed
-              interiors make you feel as if you are truly in Paris and provide the perfect
-              setting for enjoying our exquisite classic and modern French fare such as Duck
-              Leg Confit and always popular Steak Frites. Gaspar offers two stories of dining
-              in addition to full bars both upstairs and downstairs and an exclusive room
-              reserved to hold the largest selection of Cognac in San Francisco.
-              In addition to our all day menu, we offer live jazz music on Saturdays.</Text>
+          <Text>
+            Gaspar is a delightful French restaurant in
+            San Francisco’s Financial District that is inspired by the romantic,
+            bustling Paris of old. Located near famed Union Square, our richly-designed
+            interiors make you feel as if you are truly in Paris and provide the perfect
+            setting for enjoying our exquisite classic and modern French fare such as Duck
+            Leg Confit and always popular Steak Frites. Gaspar offers two stories of dining
+            in addition to full bars both upstairs and downstairs and an exclusive room
+            reserved to hold the largest selection of Cognac in San Francisco.
+            In addition to our all day menu, we offer live jazz music on Saturdays.
+          </Text>
         </View>
       </ScrollView>
     );
