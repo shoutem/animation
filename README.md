@@ -79,7 +79,7 @@ For more complex animations, run application from `examples` folder:
 
 ```bash
 $ git clone git@github.com:shoutem/animation.git
-$ cd examples/ShoutemAnimation
+$ cd animation/examples/ShoutemAnimation/
 $ npm install
 $ react-native run-ios
 ```
