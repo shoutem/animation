@@ -2,7 +2,7 @@
 # Animations
 <hr />
 
-When building an application, there is a need to create animations to enrich the user experience. Although React Native [provides a way](https://facebook.github.io/react-native/docs/animations.html) to implement arbitrary animations, it is not an easy task to do it, even for simple animations. That's where `@shoutem/animation` package comes in. Package contains **animation components** that should be wrapped around components that you want to get animated and **driver** that _controls_ the animations.
+When building an application, there is a need to create animations to enrich the user experience. Although React Native [provides a way](https://facebook.github.io/react-native/docs/animations.html) to implement arbitrary animations, it is not an easy task to do it, even for simple animations. That's where `@shoutem/animation` package comes in. Package contains **animation components** that should be wrapped around components that you want to get animated and **driver** that controls the animations.
 
 ## Install
 
@@ -17,19 +17,17 @@ All the documentation is available on the [Developer portal](http://shoutem.gith
 
 ## Examples
 
-To see animation components in action, take a loot at the application in the `examples` folder.
-
-```bash
-$ git clone git@github.com:shoutem/animation.git
-$ cd examples/ShoutemAnimation
-$ npm install
-$ react-native run-ios
-```
-
-Or init new react native app:
+To see animation components in action, start by creating new React Native project:
 
 ```bash
 $ react-native init HelloWorld
+```
+
+Locate to project and install `@shoutem/animation`:
+
+```bash
+$ cd HelloWorld
+$ npm install --save @shoutem/animation
 ```
 
 Now, simply copy the following to your `index.ios.js` or `index.android.js` file of React Native project:
@@ -41,7 +39,6 @@ import {
   Text,
   View,
 } from 'react-native';
-
 import {
   FadeOut,
   FadeIn,
@@ -76,6 +73,15 @@ Finally, run the app!
 ```bash
 $ react-native run-ios
 $ react-native run-android
+```
+
+For more complex animations, run application from `examples` folder:
+
+```bash
+$ git clone git@github.com:shoutem/animation.git
+$ cd examples/ShoutemAnimation
+$ npm install
+$ react-native run-ios
 ```
 
 ## UI Toolkit
