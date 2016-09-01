@@ -94,11 +94,10 @@ class Screen extends Components {
 But we could shorten this even more by using ScrollView from @shoutem/ui which handles and create drivers for you
 
 ```javascript
-...
 import { ScrollView } from '@shoutem/ui';
 import { MyComponent } from './MyComponent';
 
-class Screen extends Components {
+export class Screen extends Components {
   render() {
     return (
       <ScrollView>
