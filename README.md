@@ -45,7 +45,7 @@ import {
   TimingDriver,
 } from '@shoutem/animation';
 
-class MyApp extends Component {
+class HelloWorld extends Component {
   render() {
     // create new TimingDriver for animations that will change its value for 2000ms
     const driver = new TimingDriver({ duration: 2000 });
