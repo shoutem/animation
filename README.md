@@ -35,7 +35,7 @@ $ react-native init HelloWorld
 Now, simply copy the following to your `index.ios.js` or `index.android.js` file of React Native project:
 
 ```javascript
-import React, { Component } from 'react;
+import React, { Component } from 'react';
 import {
   AppRegistry,
   Text,
