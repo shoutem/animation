@@ -2,103 +2,105 @@
 # Animations
 <hr />
 
-When building an application, there is a need to create animations to enrich the user experience. Although React Native [provides a way](https://facebook.github.io/react-native/docs/animations.html) to implement arbitrary animations, it is not an easy task to do it, even for simple animations. That's where `@shoutem/animation` package comes in. Package contains **animation components** that should be wrapped around components that you want to get animated and **driver** that _controls_ the animations.
+When building an application, there is a need to create animations to enrich the user experience. Although React Native [provides a way](https://facebook.github.io/react-native/docs/animations.html) to implement arbitrary animations, it is not an easy task to do it, even for simple animations. That's where `@shoutem/animation` package comes in. Package contains **animation components** that should be wrapped around components that you want to get animated and **driver** that controls the animations.
 
 ## Install
 
 ```bash
-npm install --save @shoutem/animation
+$ npm install --save @shoutem/animation
 ```
 
 ## Docs
 
-All the documentation is available on the [Developer portal](http://shoutem.github.io/docs/ui-toolkit/animation/animations).
+All the documentation is available on the [Developer portal](http://shoutem.github.io/docs/ui-toolkit/animation/introduction).
 
 
 ## Examples
 
-To see animation components in action, check the application in the `examples` folder.
+To see animation components in action, start by creating new React Native project:
 
 ```bash
-git clone git@github.com:shoutem/animation.git
-cd examples/ShoutemAnimation
-npm install
-react-native run-ios
+$ react-native init HelloWorld
 ```
 
-But feel the full power of this package with `connectAnimation` higher order component
+Locate to project and install `@shoutem/animation`:
 
-Create your component
-
-```javascript
-
-import { connectAnimation } from '@shoutem/animation'
-
-class MyComponent extends Component {
-  render() {
-  ...
-  }
-}
-
-// connect it with connectAnimation and pass the list of animation functions
-
-const AnimatedComponent = connectAnimation(MyComponent, {
-  fadeOutAnimation(driver, { layout, animationOptions }) {
-    return {
-      opacity: driver.value.interpolate({
-        inputRange: [0, layout.height],
-        outputRange: [0, 1],
-      }),
-    };
-  },
-  solidifyAnimation(driver, { layout, options }) {
-    return {
-      backgroundColor: driver.value.interpolate({
-        inputRange: [0, 100],
-        outputRange: ['rgba(255, 255, 255, 0)', 'rgba(0, 170, 223, 1)'],
-      }),
-    };
-  },
-});
-
-export {
-AnimatedMyComponent as MyComponent,
-}
-
+```bash
+$ cd HelloWorld
+$ npm install --save @shoutem/animation
 ```
 
-Use it on some screen by passing it a driver
-
+Now, simply copy the following to your `index.ios.js` file of React Native project:
 
 ```javascript
-...
-class Screen extends Components {
+import React, { Component } from 'react';
+import {
+  AppRegistry,
+  Text,
+  View,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
+
+import {
+  FadeOut,
+  FadeIn,
+  ZoomOut,
+  ZoomIn,
+  ScrollDriver,
+} from '@shoutem/animation';
+
+class HelloWorld extends Component {
   render() {
+    // Create new ScrollDriver that will animate animations
+    // when passing through scroll positions in input range
     const driver = new ScrollDriver();
     return (
       <ScrollView {...driver.scrollViewProps}>
-        <MyComponent animationName="hero" driver={driver} />
+        <View style={style.container}>
+          {/* This will fade out and zoom in on scroll position 100 */}
+          <ZoomIn driver={driver} inputRange={[50, 100]} maxFactor={3}>
+            <FadeOut driver={driver} inputRange={[50, 100]}>
+              <Text>Good Bye</Text>
+            </FadeOut>
+          </ZoomIn>
+          {/* This will fade in and zoom out on scroll position 200 */}
+          <ZoomOut driver={driver} inputRange={[150, 200]} maxFactor={3}>
+            <FadeIn driver={driver} inputRange={[150, 200]}>
+              <Text>Hello</Text>
+            </FadeIn>
+          </ZoomOut>
+        </View>
       </ScrollView>
     );
   }
 }
+
+const style = StyleSheet.create({
+  container: {
+    height: 800,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+});
+
+AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
 ```
 
-But could shorten this even more by using ScrollView from @shoutem/ui which handles and create drivers for you
+Finally, run the app!
 
-```javascript
-...
-import { ScrollView } from '@shoutem/ui';
+```bash
+$ react-native run-ios
+```
 
-class Screen extends Components {
-  render() {
-    return (
-      <ScrollView>
-        <MyComponent animationName="hero" />
-      </ScrollView>
-    );
-  }
-}
+For more complex animations, run application from `examples` folder:
+
+```bash
+$ git clone git@github.com:shoutem/animation.git
+$ cd animation/examples/ShoutemAnimation/
+$ npm install
+$ react-native run-ios
 ```
 
 ## UI Toolkit

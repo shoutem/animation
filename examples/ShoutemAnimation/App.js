@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import {
-  NavigationBar,
   DropDownMenu,
   Screen,
+  Divider,
 } from '@shoutem/ui';
 
 import Parallax from './Parallax';
@@ -31,6 +31,7 @@ export class App extends Component {
     const SelectedComponent = examples[selectedComponent];
     return (
       <Screen>
+        <Divider />
         <DropDownMenu
           styleName="horizontal"
           options={[{
