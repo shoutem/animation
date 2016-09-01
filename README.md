@@ -38,32 +38,46 @@ import {
   AppRegistry,
   Text,
   View,
+  ScrollView,
+  StyleSheet,
 } from 'react-native';
+
 import {
   FadeOut,
   FadeIn,
-  TimingDriver,
+  ScrollDriver,
 } from '@shoutem/animation';
 
-class MyApp extends Component {
+class HelloWorld extends Component {
   render() {
-    // create new TimingDriver for animations that will change its value for 2000ms
-    const driver = new TimingDriver({ duration: 2000 });
-    // run timer to end value of 1
-    const endValue = 1;
-    driver.runTimer(endValue);
+    // create new ScrollDriver for animations that will animate them between
+    // passed scroll positions in input range
+    const driver = new ScrollDriver();
     return (
-      <View>
-        <FadeOut driver={driver}>
-          <Text>Good Bye</Text>
-        </FadeOut>
-        <FadeIn driver={driver}>
-          <Text>Hello</Text>
-        </FadeIn>
-      </View>
+      <ScrollView {...driver.scrollViewProps}>
+        <View style={style.container}>
+          {/* This will fade out on scroll position 100 */}
+          <FadeOut driver={driver} inputRange={[50, 100]}>
+            <Text>Good Bye</Text>
+          </FadeOut>
+          {/* This will fade in on scroll position 150 */}
+          <FadeIn driver={driver} inputRange={[50, 150]}>
+            <Text>Hello</Text>
+          </FadeIn>
+        </View>
+      </ScrollView>
     );
   }
 }
+
+const style = StyleSheet.create({
+  container: {
+    height: 900,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+});
 
 AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
 ```
