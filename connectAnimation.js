@@ -15,6 +15,11 @@ function removeAnimationsFromStyle(style) {
   return _.omitBy(style, (value, key) => _.isFunction(value) && _.endsWith(key, ANIMATION_SUFFIX));
 }
 
+function useAnimated(styleValue, animatedStyleValue) {
+  return animatedStyleValue._parent instanceof Animated.Value ?
+    animatedStyleValue :
+    _.assign(styleValue, animatedStyleValue);
+}
 
 function resolveAnimatedStyle({
   props,
@@ -52,7 +57,7 @@ function resolveAnimatedStyle({
 
   const animatedStyle = createAnimatedStyle(driver, { layout, animationOptions });
 
-  return _.assign(removeAnimationsFromStyle(style), animatedStyle);
+  return _.mergeWith(removeAnimationsFromStyle(style), animatedStyle, useAnimated);
 }
 
 /**
