@@ -164,6 +164,12 @@ export function connectAnimation(WrappedComponent, animations = {}) {
       });
     }
 
+    setNativeProps(nativeProps) {
+      if (this._root.setNativeProps) {
+        this._root.setNativeProps(nativeProps);
+      }
+    }
+
     render() {
       const { resolvedStyle } = this.state;
       const ConnectedComponent = isComponentAnimated(this.props) ?
@@ -175,6 +181,7 @@ export function connectAnimation(WrappedComponent, animations = {}) {
           onLayout={this.onLayout}
           {...this.props}
           style={resolvedStyle}
+          ref={component => this._root = component}
         />
       );
     }
