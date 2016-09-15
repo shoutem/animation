@@ -125,6 +125,7 @@ export function connectAnimation(WrappedComponent, animations = {}) {
       super(props, context);
       this.onLayout = this.onLayout.bind(this);
       this.resolveStyle = this.resolveStyle.bind(this);
+      this.setRoot = this.setRoot.bind(this);
       this.state = {
         layout: {
           height: 0,
@@ -170,6 +171,10 @@ export function connectAnimation(WrappedComponent, animations = {}) {
       }
     }
 
+    setRoot(component) {
+      this._root = component;
+    }
+
     render() {
       const { resolvedStyle } = this.state;
       const ConnectedComponent = isComponentAnimated(this.props) ?
@@ -181,7 +186,7 @@ export function connectAnimation(WrappedComponent, animations = {}) {
           onLayout={this.onLayout}
           {...this.props}
           style={resolvedStyle}
-          ref={component => this._root = component}
+          ref={this.setRoot}
         />
       );
     }
