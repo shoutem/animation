@@ -125,7 +125,7 @@ export function connectAnimation(WrappedComponent, animations = {}) {
       super(props, context);
       this.onLayout = this.onLayout.bind(this);
       this.resolveStyle = this.resolveStyle.bind(this);
-      this.setRoot = this.setRoot.bind(this);
+      this.setNativeComponent = this.setNativeComponent.bind(this);
       this.state = {
         layout: {
           height: 0,
@@ -166,13 +166,13 @@ export function connectAnimation(WrappedComponent, animations = {}) {
     }
 
     setNativeProps(nativeProps) {
-      if (this._root.setNativeProps) {
-        this._root.setNativeProps(nativeProps);
+      if (this.nativeComponent.setNativeProps) {
+        this.nativeComponent.setNativeProps(nativeProps);
       }
     }
 
-    setRoot(component) {
-      this._root = component;
+    setNativeComponent(component) {
+      this.nativeComponent = component;
     }
 
     render() {
@@ -186,7 +186,7 @@ export function connectAnimation(WrappedComponent, animations = {}) {
           onLayout={this.onLayout}
           {...this.props}
           style={resolvedStyle}
-          ref={this.setRoot}
+          ref={this.setNativeComponent}
         />
       );
     }
