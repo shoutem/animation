@@ -15,10 +15,15 @@ function removeAnimationsFromStyle(style) {
   return _.omitBy(style, (value, key) => _.isFunction(value) && _.endsWith(key, ANIMATION_SUFFIX));
 }
 
-function useAnimated(styleValue, animatedStyleValue) {
-  return animatedStyleValue._parent instanceof Animated.Value ?
+/**
+ * This function transfers styles that are created by animated interpolations
+ * and it does that recursively because sometimes style is an object/array of
+ * that contains styles created by animated interpolations
+ */
+function transferAnimatedValues(styleValue, animatedStyleValue, key) {
+  return _.isFunction(animatedStyleValue.interpolate) || _.isUndefined(styleValue) ?
     animatedStyleValue :
-    _.assign(styleValue, animatedStyleValue);
+    _.mergeWith(styleValue, animatedStyleValue, transferAnimatedValues);
 }
 
 function resolveAnimatedStyle({
@@ -57,7 +62,7 @@ function resolveAnimatedStyle({
 
   const animatedStyle = createAnimatedStyle(driver, { layout, animationOptions });
 
-  return _.mergeWith(removeAnimationsFromStyle(style), animatedStyle, useAnimated);
+  return _.mergeWith(removeAnimationsFromStyle(style), animatedStyle, transferAnimatedValues);
 }
 
 /**
