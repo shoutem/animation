@@ -17,8 +17,8 @@ function removeAnimationsFromStyle(style) {
 
 /**
  * This function transfers styles that are created by animated interpolations
- * and it does that recursively because sometimes style is an object/array of
- * that contains styles created by animated interpolations
+ * and it does that recursively because sometimes style is an object/array
+ * which contains styles created by animated interpolations
  */
 function transferAnimatedValues(styleValue, animatedStyleValue, key) {
   if(_.isFunction(animatedStyleValue.interpolate) || _.isUndefined(styleValue)) {
