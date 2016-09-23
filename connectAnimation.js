@@ -21,9 +21,9 @@ function removeAnimationsFromStyle(style) {
  * that contains styles created by animated interpolations
  */
 function transferAnimatedValues(styleValue, animatedStyleValue, key) {
-  return _.isFunction(animatedStyleValue.interpolate) || _.isUndefined(styleValue) ?
-    animatedStyleValue :
-    _.mergeWith(styleValue, animatedStyleValue, transferAnimatedValues);
+  if(_.isFunction(animatedStyleValue.interpolate) || _.isUndefined(styleValue)) {
+    return animatedStyleValue;
+  }
 }
 
 function resolveAnimatedStyle({
