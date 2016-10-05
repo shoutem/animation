@@ -1,6 +1,7 @@
 export { default as makeZoomable } from './ZoomableComponent';
 export { ScrollDriver } from './ScrollDriver';
 export { TimingDriver } from './TimingDriver';
+export { TouchableDriver } from './TouchableDriver';
 export { Parallax } from './Parallax';
 export { FadeIn } from './FadeIn';
 export { FadeOut } from './FadeOut';
