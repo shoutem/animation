@@ -10,12 +10,14 @@ import Parallax from './Parallax';
 import HeroHeader from './HeroHeader';
 import FadeInOut from './FadeInOut';
 import ZoomInOut from './ZoomInOut';
+import ZoomInTouchable from './ZoomInTouchable';
 
 const examples = {
   Parallax,
   HeroHeader,
   FadeInOut,
   ZoomInOut,
+  ZoomInTouchable,
 };
 
 export class App extends Component {
@@ -46,6 +48,9 @@ export class App extends Component {
           }, {
             example: 'ZoomIn + ZoomOut (TimerDriver)',
             component: 'ZoomInOut',
+          }, {
+            example: 'ZoomIn (TouchableDriver)',
+            component: 'ZoomInTouchable',
           }]}
           onOptionSelected={(option) => this.setState({ selectedComponent: option.component })}
           titleProperty="example"
