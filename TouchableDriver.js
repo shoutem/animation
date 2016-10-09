@@ -4,6 +4,24 @@ import {
 } from 'react-native';
 
 /**
+ * Returns the default animation callback to use.
+ *
+ * @param {Animated.Value} value
+ * @param {double} toValue
+ * @param {Object} animationOptions
+ * @returns {CompositeAnimation}
+ */
+function defaultAnimation(value, toValue, animationOptions) {
+  return Animated.timing(
+    value,
+    {
+      toValue: toValue,
+      ...animationOptions
+    }
+  );
+}
+
+/**
  * Animation driver that creates an animated value changed on press events.
  *
  * Assign onPressIn and onPressOut props of React Native Touchable*, and
@@ -16,7 +34,13 @@ import {
  * <ZoomIn driver={driver}>
  */
 export class TouchableDriver {
-  constructor(options) {
+
+  /**
+   * @param {Object} options Animation options.
+   * @param {Function} animation Takes a Animated value, to value and options.
+   */
+  constructor(options, animation) {
+    this.animation = animation || defaultAnimation;
     this.animationOptions = Object.assign({
       easing: Easing.elastic(1),
       duration: 150,
@@ -24,7 +48,6 @@ export class TouchableDriver {
     this.value = new Animated.Value(0);
     this.onPressIn = this.onPressIn.bind(this);
     this.onPressOut = this.onPressOut.bind(this);
-    this.setValue= this.setValue.bind(this);
     this.touchableViewProps = {
       onPressIn: this.onPressIn,
       onPressOut: this.onPressOut,
@@ -32,20 +55,10 @@ export class TouchableDriver {
   }
 
   onPressIn() {
-    this.setValue(1);
+    this.animation(this.value, 1, this.animationOptions).start();
   }
 
   onPressOut() {
-    this.setValue(0);
-  }
-
-  setValue(value) {
-    Animated.timing(
-      this.value,
-      {
-        toValue: value,
-        ...this.animationOptions,
-      }
-    ).start();
+    this.animation(this.value, 0, this.animationOptions).start();
   }
 }
