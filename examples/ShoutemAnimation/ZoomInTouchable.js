@@ -26,7 +26,7 @@ export default class ZoomInTouchableExample extends Component {
             <ZoomIn driver={driver} maxFactor={1.3}>
               <Button {...driver.touchableViewProps}>
                 <Icon name="add-to-favorites-full" />
-                <Text>I'M ZOOMING IN</Text>
+                <Text>{"TOUCH ME, I'M ZOOMING IN"}</Text>
               </Button>
             </ZoomIn>
           </View>
