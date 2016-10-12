@@ -37,10 +37,8 @@ export class TouchableDriver {
 
   /**
    * @param {Object} options Animation options.
-   * @param {Function} animation Takes a Animated value, to value and options.
    */
-  constructor(options, animation) {
-    this.animation = animation || defaultAnimation;
+  constructor(options) {
     this.animationOptions = Object.assign({
       easing: Easing.elastic(1),
       duration: 150,
@@ -55,10 +53,10 @@ export class TouchableDriver {
   }
 
   onPressIn() {
-    this.animation(this.value, 1, this.animationOptions).start();
+    defaultAnimation(this.value, 1, this.animationOptions).start();
   }
 
   onPressOut() {
-    this.animation(this.value, 0, this.animationOptions).start();
+    defaultAnimation(this.value, 0, this.animationOptions).start();
   }
 }
