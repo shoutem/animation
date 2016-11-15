@@ -65,6 +65,10 @@ function resolveAnimatedStyle({
   return _.mergeWith(removeAnimationsFromStyle(style), animatedStyle, transferAnimatedValues);
 }
 
+const defaultOptions = {
+  createAnimatedComponent: true,
+};
+
 /**
  * Higher order component that creates animated component which could be animated by
  * list of passed animations. Animations are ran by driver, that could be send through
@@ -86,9 +90,15 @@ function resolveAnimatedStyle({
  * in described animation component would fadeOut when scroll is equal its height
  * @param WrappedComponent component you want to be Animated
  * @param animations collection of available animations
+ * @param options additional connect options
+ * @param options.createAnimatedComponent determines if the connected component
+ *   will be wrapped in an animated component, true by default. You may set this
+ *   to false if your component already knows how to work with animated style values.
  */
-export function connectAnimation(WrappedComponent, animations = {}) {
-  const AnimatedWrappedComponent = Animated.createAnimatedComponent(WrappedComponent);
+export function connectAnimation(WrappedComponent, animations = {}, options = defaultOptions) {
+  const AnimatedWrappedComponent = options.createAnimatedComponent ?
+    Animated.createAnimatedComponent(WrappedComponent) :
+    WrappedComponent;
 
   class AnimatedComponent extends Component {
     static propTypes = {
@@ -121,15 +131,15 @@ export function connectAnimation(WrappedComponent, animations = {}) {
        * and it should return style object
        */
       animation: React.PropTypes.func,
-    }
+    };
 
     static defaultProps = {
       animationOptions: {},
-    }
+    };
 
     static contextTypes = {
       animationDriver: DriverShape,
-    }
+    };
 
     constructor(props, context) {
       super(props, context);
