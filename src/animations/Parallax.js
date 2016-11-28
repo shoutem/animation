@@ -2,7 +2,7 @@ import React, { Component, } from 'react';
 import NativeMethodsMixin from 'react/lib/NativeMethodsMixin';
 import { Animated, View, Dimensions } from 'react-native';
 
-import { DriverShape } from './DriverShape';
+import { DriverShape } from '../drivers/DriverShape';
 /*
  * Parallax Component adds parallax effect to its children components.
  * Connect it to driver to animate it. By default children will by

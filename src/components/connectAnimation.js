@@ -3,7 +3,7 @@ import { Animated } from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
 import * as _ from 'lodash';
 
-import { DriverShape } from './DriverShape';
+import { DriverShape } from '../drivers/DriverShape';
 
 const ANIMATION_SUFFIX = 'Animation';
 

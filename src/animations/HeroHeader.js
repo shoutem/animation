@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { ZoomOut } from './ZoomOut';
 import { Parallax } from './Parallax';
-import { DriverShape } from './DriverShape';
+import { DriverShape } from '../drivers/DriverShape';
 /*
  * HeroHeader adds complex effect to its children components.
  * Connect it to driver to animate it.
