@@ -10,3 +10,9 @@ export { ZoomOut } from './src/animations/ZoomOut';
 export { HeroHeader } from './src/animations/HeroHeader';
 export { DriverShape } from './src/drivers/DriverShape';
 export { connectAnimation } from './src/components/connectAnimation';
+export {
+  isAnimatedStyleValue,
+  getAnimatedStyleValue,
+  addAnimatedValueListener,
+  removeAnimatedValueListener,
+} from './src/utils/animated-style';
