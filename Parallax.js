@@ -1,6 +1,7 @@
-import React, { Component, } from 'react';
-import NativeMethodsMixin from 'react/lib/NativeMethodsMixin';
-import { Animated, View, Dimensions } from 'react-native';
+import React, { Component } from 'react';
+import ReactNative, { Animated, View, Dimensions, UIManager } from 'react-native';
+
+const findNodeHandle = ReactNative.findNodeHandle;
 
 import { DriverShape } from './DriverShape';
 /*
@@ -79,9 +80,11 @@ export class Parallax extends Component {
   }
 
   measure() {
-    NativeMethodsMixin.measure.call(this, (x, y, width, height, pageX, pageY) => {
+    const handleMeasure = (x, y, width, height, pageX, pageY) => {
       this.setState({ x: pageX, y: pageY });
-    });
+    };
+
+    UIManager.measure(findNodeHandle(this), handleMeasure);
   }
 
   componentDidMount() {
@@ -97,7 +100,12 @@ export class Parallax extends Component {
 
   componentWillMount() {
     const { driver } = this.props;
-    driver.value.addListener(this.calculateTranslation);
+    this.animationListener = driver.value.addListener(this.calculateTranslation);
+  }
+
+  componentWillUnmount() {
+    const { driver } = this.props;
+    driver.value.removeListener(this.animationListener);
   }
 
   render() {
