@@ -74,16 +74,17 @@ export class Parallax extends Component {
     this.translation = new Animated.Value(0);
     this.calculateTranslation = this.calculateTranslation.bind(this);
     this.measure = this.measure.bind(this);
+    this.handleMeasure = this.handleMeasure.bind(this);
     this.state = {
       y: 0,
     };
   }
 
-  measure() {
-    const handleMeasure = (x, y, width, height, pageX, pageY) => {
-      this.setState({ x: pageX, y: pageY });
-    };
+  handleMeasure(x, y, width, height, pageX, pageY) {
+    this.setState({ x: pageX, y: pageY });
+  };
 
+  measure() {
     UIManager.measure(findNodeHandle(this), handleMeasure);
   }
 
