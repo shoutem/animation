@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Animated, View } from 'react-native';
-import { DriverShape } from './DriverShape';
+import { DriverShape } from '../drivers/DriverShape';
 /*
  * ZoomIn Component adds zoom in effect to its children components.
  * Connect it to driver and pass the input range to animate it.

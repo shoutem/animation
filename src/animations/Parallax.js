@@ -3,7 +3,7 @@ import ReactNative, { Animated, View, Dimensions, UIManager } from 'react-native
 
 const findNodeHandle = ReactNative.findNodeHandle;
 
-import { DriverShape } from './DriverShape';
+import { DriverShape } from '../drivers/DriverShape';
 /*
  * Parallax Component adds parallax effect to its children components.
  * Connect it to driver to animate it. By default children will by
