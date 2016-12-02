@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Animated, View } from 'react-native';
-import { DriverShape } from './DriverShape';
+import { DriverShape } from '../drivers/DriverShape';
 /*
- * ZoomOut Component adds zoom out effect to its children components.
+ * FadeOut Component adds fade out effect to its children components.
  * Connect it to driver and pass the input range to animate it.
  * e.g.:
  * ...
@@ -12,22 +12,21 @@ import { DriverShape } from './DriverShape';
  *  <ScrollView
  *    {...driver.scrollViewProps}
  *  >
- *    <ZoomOut
+ *    <FadeOut
  *      driver={driver}
  *      inputRange={[100,150]}
- *      maxFactor={1.5}
  *    >
  *      <Image />
- *    </ZoomOut>
+ *    </FadeOut>
  *  </ScrollView>
  * );
  *
  * ...
- * Above code will create scroll dependent zoom out animation over Image component
- * from scroll 100, to scroll 150 where image is scaled by maxFactor at scroll 100,
- * and has original size at scroll 150
+ * Above code will create scroll dependent fade out animation over Image component
+ * from scroll 100, to scroll 150 where image is opaque at scroll 100,
+ * and fully transparent at scroll 150
  */
-export class ZoomOut extends Component {
+export class FadeOut extends Component {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
@@ -39,31 +38,23 @@ export class ZoomOut extends Component {
     children: React.PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
-     * children would zoom out from maxFactor
+     * children would fade out
      */
     inputRange: React.PropTypes.array,
-    /**
-     * from which factor children would zoom out
-     */
-    maxFactor: React.PropTypes.number,
     style: React.PropTypes.object,
   }
 
   render() {
-    const { driver, children, inputRange = [0, 1], maxFactor = 1.5, style } = this.props;
+    const { driver, children, inputRange = [0, 1], style } = this.props;
 
     return (
       <Animated.View
         style={[style, {
-          transform: [
-            {
-              scale: driver.value.interpolate({
-                inputRange,
-                outputRange: [maxFactor, 1],
-                extrapolateRight: 'clamp',
-              }),
-            },
-          ],
+          opacity: driver.value.interpolate({
+            inputRange,
+            outputRange: [1, 0],
+            extrapolate: 'clamp',
+          }),
         }]}
       >
         {children}
