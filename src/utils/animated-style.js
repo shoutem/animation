@@ -25,6 +25,15 @@ export const getAnimatedStyleValue = (value) => {
   return value;
 };
 
+/**
+ * Finds the closest `AnimatedValue` instance from the given
+ * animated style value (e.g., AnimatedInterpolation, etc.).
+ * This function will crawl the animated style hierarchy until
+ * it finds the first `AnimatedValue` instance.
+ *
+ * @param animatedStyleValue The starting animated style value.
+ * @returns {*} The closest `AnimatedValue`.
+ */
 const findAnimatedValue = (animatedStyleValue) => {
   if (animatedStyleValue instanceof Animated.Value) {
     return animatedStyleValue;
