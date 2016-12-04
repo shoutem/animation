@@ -85,7 +85,7 @@ export class Parallax extends Component {
   };
 
   measure() {
-    UIManager.measure(findNodeHandle(this), handleMeasure);
+    UIManager.measure(findNodeHandle(this), this.handleMeasure);
   }
 
   componentDidMount() {
