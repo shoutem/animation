@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View } from './View';
-import { DriverShape } from './DriverShape';
+import { DriverShape } from '../drivers/DriverShape';
 /*
- * Rotate Component adds rotation effect to its children components.
- * Connect it to driver and pass the input range to animate it.
+ * FadeIn Component adds fade in effect to its children components.
+ * Connect it to an animation driver and pass the input range to animate it.
  * e.g.:
  * ...
  * const driver = new ScrollDriver();
@@ -12,20 +12,21 @@ import { DriverShape } from './DriverShape';
  *  <ScrollView
  *    {...driver.scrollViewProps}
  *  >
- *    <Rotate
+ *    <FadeIn
  *      driver={driver}
  *      inputRange={[100,150]}
- *      angle="180deg"
  *    >
  *      <Image />
- *    </Rotate>
+ *    </FadeIn>
  *  </ScrollView>
  * );
  *
  * ...
- * Above code will create scroll dependent rotation of an Image by 180 degrees
+ * Above code will create scroll dependent fade in animation over Image component
+ * from scroll position 100, to scroll position 150 where image is fully transparent at
+ * scroll position 100, and opaque at scroll position 150
  */
-export class Rotate extends Component {
+export class FadeIn extends Component {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
@@ -37,32 +38,19 @@ export class Rotate extends Component {
     children: React.PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
-     * children would zoom in to maxFactor
+     * children would fade in
      */
     inputRange: React.PropTypes.array,
-    /**
-     * rotation angle
-     */
-    angle: React.PropTypes.number,
-    dimension: React.PropTypes.string,
-    style: React.PropTypes.object,
-  };
+  }
 
   render() {
-    const {
-      driver,
-      children,
-      inputRange = [0, 1],
-      angle = '360deg',
-      dimension,
-      style
-    } = this.props;
+    const { driver, children, inputRange = [0, 1], style } = this.props;
 
     return (
       <View
         driver={driver}
-        animationName="rotate"
-        animationOptions={{ inputRange, angle, dimension }}
+        animationName="fadeIn"
+        animationOptions={{ inputRange }}
         style={style}
       >
         {children}

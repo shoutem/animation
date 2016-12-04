@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View } from './View';
-import { DriverShape } from './DriverShape';
+import { DriverShape } from '../drivers/DriverShape';
 /*
- * ZoomIn Component adds zoom in effect to its children components.
+ * ZoomOut Component adds zoom out effect to its children components.
  * Connect it to driver and pass the input range to animate it.
  * e.g.:
  * ...
@@ -12,22 +12,22 @@ import { DriverShape } from './DriverShape';
  *  <ScrollView
  *    {...driver.scrollViewProps}
  *  >
- *    <ZoomIn
+ *    <ZoomOut
  *      driver={driver}
  *      inputRange={[100,150]}
  *      maxFactor={1.5}
  *    >
  *      <Image />
- *    </ZoomIn>
+ *    </ZoomOut>
  *  </ScrollView>
  * );
  *
  * ...
- * Above code will create scroll dependent zoom in animation over Image component
- * from scroll 100, to scroll 150 where image has original size at scroll 100,
- * and is scaled by maxFactor at scroll 150
+ * Above code will create scroll dependent zoom out animation over Image component
+ * from scroll 100, to scroll 150 where image is scaled by maxFactor at scroll 100,
+ * and has original size at scroll 150
  */
-export class ZoomIn extends Component {
+export class ZoomOut extends Component {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
@@ -39,11 +39,11 @@ export class ZoomIn extends Component {
     children: React.PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
-     * children would zoom in to maxFactor
+     * children would zoom out from maxFactor
      */
     inputRange: React.PropTypes.array,
     /**
-     * To which factor children would zoom in
+     * from which factor children would zoom out
      */
     maxFactor: React.PropTypes.number,
     style: React.PropTypes.object,
