@@ -69,6 +69,7 @@ export const animations = {
   slideInAnimation(driver, { layout, animationOptions }) {
     const { offset, inputRange } = animationOptions;
     const { x, y } = offset;
+
     return {
       transform: [
         {
@@ -76,6 +77,8 @@ export const animations = {
             inputRange,
             outputRange: [y, 0],
           }),
+        },
+        {
           translateX: driver.value.interpolate({
             inputRange,
             outputRange: [x, 0],
@@ -94,6 +97,7 @@ export const animations = {
             inputRange,
             outputRange: [0, y],
           }),
+        }, {
           translateX: driver.value.interpolate({
             inputRange,
             outputRange: [0, x],
@@ -108,12 +112,13 @@ export const animations = {
       dimension = '',
       angle
     } = animationOptions;
+
     return {
       transform: [
         {
-          [`rotate${dimension}`]: driver.value.interpolate({
+          [`rotate${dimension.toUpperCase()}`]: driver.value.interpolate({
             inputRange,
-            outputRange: [0, angle],
+            outputRange: ["0deg", angle],
           }),
         },
       ],

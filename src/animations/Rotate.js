@@ -43,7 +43,7 @@ export class Rotate extends Component {
     /**
      * rotation angle
      */
-    angle: React.PropTypes.number,
+    angle: React.PropTypes.string,
     dimension: React.PropTypes.string,
     style: React.PropTypes.object,
   };

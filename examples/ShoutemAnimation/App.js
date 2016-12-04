@@ -11,6 +11,8 @@ import HeroHeader from './HeroHeader';
 import FadeInOut from './FadeInOut';
 import ZoomInOut from './ZoomInOut';
 import ZoomInTouchable from './ZoomInTouchable';
+import Rotate from './Rotate';
+import SlideIn from './SlideIn';
 
 const examples = {
   Parallax,
@@ -18,6 +20,8 @@ const examples = {
   FadeInOut,
   ZoomInOut,
   ZoomInTouchable,
+  Rotate,
+  SlideIn,
 };
 
 export class App extends Component {
@@ -51,6 +55,12 @@ export class App extends Component {
           }, {
             example: 'ZoomIn (TouchableDriver)',
             component: 'ZoomInTouchable',
+          }, {
+            example: 'Rotate',
+            component: 'Rotate',
+          }, {
+            example: 'Slide',
+            component: 'SlideIn',
           }]}
           onOptionSelected={(option) => this.setState({ selectedComponent: option.component })}
           titleProperty="example"
