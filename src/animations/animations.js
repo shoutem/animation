@@ -68,7 +68,7 @@ export const animations = {
   },
   slideInAnimation(driver, { layout, animationOptions }) {
     const { offset, inputRange } = animationOptions;
-    const { x, y } = offset;
+    const { x = 0, y = 0 } = offset;
 
     return {
       transform: [
@@ -76,12 +76,14 @@ export const animations = {
           translateY: driver.value.interpolate({
             inputRange,
             outputRange: [y, 0],
+            extrapolate: 'clamp',
           }),
         },
         {
           translateX: driver.value.interpolate({
             inputRange,
             outputRange: [x, 0],
+            extrapolate: 'clamp',
           }),
         }
       ],
@@ -89,18 +91,20 @@ export const animations = {
   },
   slideOutAnimation(driver, { layout, animationOptions }) {
     const { offset, inputRange } = animationOptions;
-    const { x, y } = offset;
+    const { x = 0, y = 0 } = offset;
     return {
       transform: [
         {
           translateY: driver.value.interpolate({
             inputRange,
             outputRange: [0, y],
+            extrapolate: 'clamp',
           }),
         }, {
           translateX: driver.value.interpolate({
             inputRange,
             outputRange: [0, x],
+            extrapolate: 'clamp',
           }),
         }
       ],

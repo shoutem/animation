@@ -54,17 +54,26 @@ class SlideIn extends Component {
       driver,
       children,
       inputRange = [0, 1],
-      style
+      style,
+      from,
     } = this.props;
+
+    const offset = from.split(' ').reduce((offset = {}, position) => {
+      if (position.toLowerCase() === "top") {
+        offset['y'] = layout ? -(layout.pageY + layout.height) || 0 : 0;
+      } else if (position.toLowerCase() === "right") {
+        offset['x'] = layout ? -(layout.pageX + layout.width) || 0 : 0;
+      } else if (position.toLowerCase() === "bottom") {
+        offset['y'] = layout ? (layout.pageY + layout.height) || 0 : 0;
+      } else if (position.toLowerCase() === "left") {
+        offset['x'] = layout ? (layout.pageX + layout.width) || 0 : 0;
+      }
+      return offset;
+    }, {});
 
     const {
       layout
     } = this.state;
-
-    const offset = {
-      x: layout ? -(layout.pageX + layout.width) || 0 : 0,
-      y: layout ? -(layout.pageY + layout.height) || 0 : 0,
-    };
 
     return (
       <View
