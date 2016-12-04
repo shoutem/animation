@@ -1,32 +1,9 @@
 import React, { Component } from 'react';
-import { View } from './View';
-import { DriverShape } from '../drivers/DriverShape';
-import { measure } from '../components/measure';
-/*
- * Rotate Component adds rotation effect to its children components.
- * Connect it to driver and pass the input range to animate it.
- * e.g.:
- * ...
- * const driver = new ScrollDriver();
- *
- * return (
- *  <ScrollView
- *    {...driver.scrollViewProps}
- *  >
- *    <Rotate
- *      driver={driver}
- *      inputRange={[100,150]}
- *      angle="180deg"
- *    >
- *      <Image />
- *    </Rotate>
- *  </ScrollView>
- * );
- *
- * ...
- * Above code will create scroll dependent rotation of an Image by 180 degrees
- */
-class SlideIn extends Component {
+import { View } from './../View';
+import { DriverShape } from '../../drivers/DriverShape';
+import { measure } from '../../components/measure';
+
+class Slide extends Component {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
@@ -44,7 +21,8 @@ class SlideIn extends Component {
     /**
      * rotation angle
      */
-    from: React.PropTypes.string,
+    direction: React.PropTypes.string,
+    animationName: React.PropTypes.string,
     style: React.PropTypes.object,
   };
 
@@ -54,14 +32,15 @@ class SlideIn extends Component {
       children,
       inputRange = [0, 1],
       style,
-      from,
+      direction,
+      animationName
     } = this.props;
 
     const {
       layout
     } = this.state;
 
-    const offset = from.split(' ').reduce((offset = {}, position) => {
+    const offset = direction.split(' ').reduce((offset = {}, position) => {
       if (position.toLowerCase() === "top") {
         offset['y'] = -(layout.pageY + layout.height);
       } else if (position.toLowerCase() === "right") {
@@ -77,7 +56,7 @@ class SlideIn extends Component {
     return (
       <View
         driver={driver}
-        animationName="slideIn"
+        animationName={animationName}
         animationOptions={{ inputRange, offset }}
         style={style}
       >
@@ -87,8 +66,8 @@ class SlideIn extends Component {
   }
 }
 
-const measuredSlideIn = measure(SlideIn);
+const measuredSlide = measure(Slide);
 
 export {
-  measuredSlideIn as SlideIn
+  measuredSlide as Slide
 }

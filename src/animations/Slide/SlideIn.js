@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View } from './View';
-import { DriverShape } from '../drivers/DriverShape';
+import { Slide } from './Slide';
+import { DriverShape } from '../../drivers/DriverShape';
+
 /*
- * Rotate Component adds rotation effect to its children components.
+ * SlideIn Component adds slide in effect to its children components.
  * Connect it to driver and pass the input range to animate it.
  * e.g.:
  * ...
@@ -12,20 +13,21 @@ import { DriverShape } from '../drivers/DriverShape';
  *  <ScrollView
  *    {...driver.scrollViewProps}
  *  >
- *    <Rotate
+ *    <SlideIn
  *      driver={driver}
  *      inputRange={[100,150]}
- *      angle="180deg"
+ *      to="top right"
  *    >
  *      <Image />
- *    </Rotate>
+ *    </SlideIn>
  *  </ScrollView>
  * );
  *
  * ...
- * Above code will create scroll dependent rotation of an Image by 180 degrees
+ * Above code will create scroll dependent slide in of an Image to
+ * the top right corner of the screen between scroll position of 100 and 150
  */
-export class Rotate extends Component {
+export class SlideIn extends Component {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
@@ -37,17 +39,13 @@ export class Rotate extends Component {
     children: React.PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
-     * children would rotate by an angle in dimension
+     * children would slide in
      */
     inputRange: React.PropTypes.array,
     /**
-     * rotation angle
+     * position from where wrapped components should slide in
      */
-    angle: React.PropTypes.string,
-    /**
-     * dimension of rotation axis (x, y, z), z is default
-     */
-    dimension: React.PropTypes.string,
+    from: React.PropTypes.string,
     style: React.PropTypes.object,
   };
 
@@ -56,20 +54,20 @@ export class Rotate extends Component {
       driver,
       children,
       inputRange = [0, 1],
-      angle = '360deg',
-      dimension,
-      style
+      style,
+      from,
     } = this.props;
 
     return (
-      <View
+      <Slide
         driver={driver}
-        animationName="rotate"
-        animationOptions={{ inputRange, angle, dimension }}
+        animationName="slideIn"
+        inputRange={inputRange}
+        direction={from}
         style={style}
       >
         {children}
-      </View>
+      </Slide>
     );
   }
 }
