@@ -8,7 +8,17 @@ export const measure = Component => {
       super(props, context);
       this.measure = this.measure.bind(this);
       this.handleMeasure = this.handleMeasure.bind(this);
-      this.state = { ...super.state };
+      this.state = {
+        ...super.state,
+        layout: {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0,
+          pageX: 0,
+          pageY: 0,
+        }
+      };
     }
 
     handleMeasure(x, y, width, height, pageX, pageY) {

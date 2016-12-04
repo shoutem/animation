@@ -26,7 +26,7 @@ import { measure } from '../components/measure';
  * ...
  * Above code will create scroll dependent rotation of an Image by 180 degrees
  */
-class SlideIn extends Component {
+class SlideOut extends Component {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
@@ -44,7 +44,7 @@ class SlideIn extends Component {
     /**
      * rotation angle
      */
-    from: React.PropTypes.string,
+    to: React.PropTypes.string,
     style: React.PropTypes.object,
   };
 
@@ -54,14 +54,14 @@ class SlideIn extends Component {
       children,
       inputRange = [0, 1],
       style,
-      from,
+      to,
     } = this.props;
 
     const {
       layout
     } = this.state;
 
-    const offset = from.split(' ').reduce((offset = {}, position) => {
+    const offset = to.split(' ').reduce((offset = {}, position) => {
       if (position.toLowerCase() === "top") {
         offset['y'] = -(layout.pageY + layout.height);
       } else if (position.toLowerCase() === "right") {
@@ -77,7 +77,7 @@ class SlideIn extends Component {
     return (
       <View
         driver={driver}
-        animationName="slideIn"
+        animationName="slideOut"
         animationOptions={{ inputRange, offset }}
         style={style}
       >
@@ -87,8 +87,8 @@ class SlideIn extends Component {
   }
 }
 
-const measuredSlideIn = measure(SlideIn);
+const measuredSlideOut = measure(SlideOut);
 
 export {
-  measuredSlideIn as SlideIn
+  measuredSlideOut as SlideOut
 }

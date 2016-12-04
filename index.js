@@ -8,6 +8,7 @@ export { FadeOut } from './src/animations/FadeOut';
 export { ZoomIn } from './src/animations/ZoomIn';
 export { ZoomOut } from './src/animations/ZoomOut';
 export { SlideIn } from './src/animations/SlideIn';
+export { SlideOut } from './src/animations/SlideOut';
 export { Rotate } from './src/animations/Rotate';
 export { HeroHeader } from './src/animations/HeroHeader';
 export { DriverShape } from './src/drivers/DriverShape';
