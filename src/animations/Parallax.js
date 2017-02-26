@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import ReactNative, { Animated, View, Dimensions, UIManager } from 'react-native';
-
-const findNodeHandle = ReactNative.findNodeHandle;
+import ReactNative, { Animated, View, Dimensions } from 'react-native';
 
 import { DriverShape } from '../drivers/DriverShape';
+import { measure } from '../components/measure';
 /*
  * Parallax Component adds parallax effect to its children components.
  * Connect it to driver to animate it. By default children will by
@@ -31,7 +30,7 @@ import { DriverShape } from '../drivers/DriverShape';
  * Above code will create scroll dependent parallax animation over Image component
  * where image will be scrolled 2 times faster than Title
  */
-export class Parallax extends Component {
+class Parallax extends Component {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
@@ -73,30 +72,13 @@ export class Parallax extends Component {
     super(props);
     this.translation = new Animated.Value(0);
     this.calculateTranslation = this.calculateTranslation.bind(this);
-    this.measure = this.measure.bind(this);
-    this.handleMeasure = this.handleMeasure.bind(this);
-    this.state = {
-      y: 0,
-    };
-  }
-
-  handleMeasure(x, y, width, height, pageX, pageY) {
-    this.setState({ x: pageX, y: pageY });
-  };
-
-  measure() {
-    UIManager.measure(findNodeHandle(this), this.handleMeasure);
-  }
-
-  componentDidMount() {
-    requestAnimationFrame(this.measure);
   }
 
   calculateTranslation(scrollOffset) {
-    const { y } = this.state;
+    const { pageY } = this.state.layout;
     const { driver } = this.props;
     const scrollHeight = driver.layout.height;
-    this.translation.setValue(scrollOffset.value - (y - scrollHeight / 2));
+    this.translation.setValue(scrollOffset.value - (pageY - scrollHeight / 2));
   }
 
   componentWillMount() {
@@ -142,3 +124,9 @@ export class Parallax extends Component {
     );
   }
 }
+
+const measuredParralax = measure(Parallax);
+
+export {
+  measuredParralax as Parallax
+};

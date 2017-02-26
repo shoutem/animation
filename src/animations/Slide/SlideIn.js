@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View } from './View';
-import { DriverShape } from '../drivers/DriverShape';
+import { Slide } from './Slide';
+import { DriverShape } from '../../drivers/DriverShape';
+
 /*
- * ZoomOut Component adds zoom out effect to its children components.
+ * SlideIn Component adds slide in effect to its children components.
  * Connect it to driver and pass the input range to animate it.
  * e.g.:
  * ...
@@ -12,22 +13,21 @@ import { DriverShape } from '../drivers/DriverShape';
  *  <ScrollView
  *    {...driver.scrollViewProps}
  *  >
- *    <ZoomOut
+ *    <SlideIn
  *      driver={driver}
  *      inputRange={[100,150]}
- *      maxFactor={1.5}
+ *      to="top right"
  *    >
  *      <Image />
- *    </ZoomOut>
+ *    </SlideIn>
  *  </ScrollView>
  * );
  *
  * ...
- * Above code will create scroll dependent zoom out animation over Image component
- * from scroll 100, to scroll 150 where image is scaled by maxFactor at scroll 100,
- * and has original size at scroll 150
+ * Above code will create scroll dependent slide in of an Image to
+ * the top right corner of the screen between scroll position of 100 and 150
  */
-export class ZoomOut extends Component {
+export class SlideIn extends Component {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
@@ -39,28 +39,35 @@ export class ZoomOut extends Component {
     children: React.PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
-     * children would zoom out from maxFactor
+     * children would slide in
      */
     inputRange: React.PropTypes.array,
     /**
-     * from which factor children would zoom out
+     * position from where wrapped components should slide in
      */
-    maxFactor: React.PropTypes.number,
+    from: React.PropTypes.string,
     style: React.PropTypes.object,
-  }
+  };
 
   render() {
-    const { driver, children, inputRange = [0, 1], maxFactor = 1.5, style } = this.props;
+    const {
+      driver,
+      children,
+      inputRange = [0, 1],
+      style,
+      from,
+    } = this.props;
 
     return (
-      <View
+      <Slide
         driver={driver}
-        animationName="zoomOut"
-        animationOptions={{ inputRange, maxFactor }}
+        animationName="slideIn"
+        inputRange={inputRange}
+        direction={from}
         style={style}
       >
         {children}
-      </View>
+      </Slide>
     );
   }
 }

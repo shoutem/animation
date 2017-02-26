@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, View } from 'react-native';
+import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
 /*
  * FadeIn Component adds fade in effect to its children components.
@@ -47,17 +47,14 @@ export class FadeIn extends Component {
     const { driver, children, inputRange = [0, 1], style } = this.props;
 
     return (
-      <Animated.View
-        style={[style, {
-          opacity: driver.value.interpolate({
-            inputRange,
-            outputRange: [0, 1],
-            extrapolate: 'clamp',
-          }),
-        }]}
+      <View
+        driver={driver}
+        animationName="fadeIn"
+        animationOptions={{ inputRange }}
+        style={style}
       >
         {children}
-      </Animated.View>
+      </View>
     );
   }
 }

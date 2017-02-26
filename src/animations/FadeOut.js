@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, View } from 'react-native';
+import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
 /*
  * FadeOut Component adds fade out effect to its children components.
@@ -48,17 +48,14 @@ export class FadeOut extends Component {
     const { driver, children, inputRange = [0, 1], style } = this.props;
 
     return (
-      <Animated.View
-        style={[style, {
-          opacity: driver.value.interpolate({
-            inputRange,
-            outputRange: [1, 0],
-            extrapolate: 'clamp',
-          }),
-        }]}
+      <View
+        driver={driver}
+        animationName="fadeOut"
+        animationOptions={{ inputRange }}
+        style={style}
       >
         {children}
-      </Animated.View>
+      </View>
     );
   }
 }
