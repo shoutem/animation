@@ -1,5 +1,5 @@
 export const animations = {
-  heroAnimation(driver, { layout, animationOptions }) {
+  heroAnimation(driver, { layout }) {
     return {
       transform: [
         {
@@ -18,7 +18,7 @@ export const animations = {
       ],
     };
   },
-  zoomOutAnimation(driver, { layout, animationOptions }) {
+  zoomOutAnimation(driver, { animationOptions }) {
     const { inputRange, maxFactor } = animationOptions;
     return {
       transform: [
@@ -32,7 +32,7 @@ export const animations = {
       ],
     };
   },
-  zoomInAnimation(driver, { layout, animationOptions }) {
+  zoomInAnimation(driver, { animationOptions }) {
     const { inputRange, maxFactor } = animationOptions;
     return {
       transform: [
@@ -46,7 +46,7 @@ export const animations = {
       ],
     };
   },
-  fadeOutAnimation(driver, { layout, animationOptions }) {
+  fadeOutAnimation(driver, { animationOptions }) {
     const { inputRange } = animationOptions;
     return {
       opacity: driver.value.interpolate({
@@ -56,7 +56,7 @@ export const animations = {
       }),
     };
   },
-  fadeInAnimation(driver, { layout, animationOptions }) {
+  fadeInAnimation(driver, { animationOptions }) {
     const { inputRange } = animationOptions;
     return {
       opacity: driver.value.interpolate({
@@ -66,7 +66,7 @@ export const animations = {
       }),
     };
   },
-  slideInAnimation(driver, { layout, animationOptions }) {
+  slideInAnimation(driver, { animationOptions }) {
     const { offset, inputRange } = animationOptions;
     const { x = 0, y = 0 } = offset;
 
@@ -89,7 +89,7 @@ export const animations = {
       ],
     };
   },
-  slideOutAnimation(driver, { layout, animationOptions }) {
+  slideOutAnimation(driver, { animationOptions }) {
     const { offset, inputRange } = animationOptions;
     const { x = 0, y = 0 } = offset;
     return {
@@ -110,17 +110,17 @@ export const animations = {
       ],
     };
   },
-  rotateAnimation(driver, { layout, animationOptions }) {
+  rotateAnimation(driver, { animationOptions }) {
     const {
       inputRange,
-      dimension = '',
+      axis = '',
       angle
     } = animationOptions;
 
     return {
       transform: [
         {
-          [`rotate${dimension.toUpperCase()}`]: driver.value.interpolate({
+          [`rotate${axis.toUpperCase()}`]: driver.value.interpolate({
             inputRange,
             outputRange: ["0deg", angle],
           }),

@@ -37,17 +37,17 @@ export class Rotate extends Component {
     children: React.PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
-     * children would rotate by an angle in dimension
+     * children would rotate by an angle in axis
      */
     inputRange: React.PropTypes.array,
     /**
-     * rotation angle
+     * rotation angle e.g. "90deg"
      */
     angle: React.PropTypes.string,
     /**
-     * dimension of rotation axis (x, y, z), z is default
+     * axis of rotation(x, y, z), z is default
      */
-    dimension: React.PropTypes.string,
+    axis: React.PropTypes.string,
     style: React.PropTypes.object,
   };
 
@@ -57,7 +57,7 @@ export class Rotate extends Component {
       children,
       inputRange = [0, 1],
       angle = '360deg',
-      dimension,
+      axis,
       style
     } = this.props;
 
@@ -65,7 +65,7 @@ export class Rotate extends Component {
       <View
         driver={driver}
         animationName="rotate"
-        animationOptions={{ inputRange, angle, dimension }}
+        animationOptions={{ inputRange, angle, axis }}
         style={style}
       >
         {children}

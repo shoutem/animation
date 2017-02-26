@@ -15,11 +15,11 @@ class Slide extends Component {
     children: React.PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
-     * children would zoom in to maxFactor
+     * children would slide
      */
     inputRange: React.PropTypes.array,
     /**
-     * rotation angle
+     * direction of where children would slide to e.g. "top right"
      */
     direction: React.PropTypes.string,
     animationName: React.PropTypes.string,

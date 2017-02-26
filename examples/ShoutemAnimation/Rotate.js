@@ -27,7 +27,7 @@ export default class RotateExample extends Component {
             </View>
           </Tile>
         </Rotate>
-        <Rotate driver={driver} dimension="y">
+        <Rotate driver={driver} axis="y">
           <Tile>
             <View styleName="content">
               <Title styleName="h-center">I am rolling around</Title>
@@ -35,7 +35,7 @@ export default class RotateExample extends Component {
             </View>
           </Tile>
         </Rotate>
-        <Rotate driver={driver} dimension="x">
+        <Rotate driver={driver} axis="x">
           <Tile>
             <View styleName="content">
               <Title styleName="h-center">I am rolling around</Title>
