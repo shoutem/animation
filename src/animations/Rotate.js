@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
 /*
- * ZoomOut Component adds zoom out effect to its children components.
+ * Rotate Component adds rotation effect to its children components.
  * Connect it to driver and pass the input range to animate it.
  * e.g.:
  * ...
@@ -12,22 +12,20 @@ import { DriverShape } from '../drivers/DriverShape';
  *  <ScrollView
  *    {...driver.scrollViewProps}
  *  >
- *    <ZoomOut
+ *    <Rotate
  *      driver={driver}
  *      inputRange={[100,150]}
- *      maxFactor={1.5}
+ *      angle="180deg"
  *    >
  *      <Image />
- *    </ZoomOut>
+ *    </Rotate>
  *  </ScrollView>
  * );
  *
  * ...
- * Above code will create scroll dependent zoom out animation over Image component
- * from scroll 100, to scroll 150 where image is scaled by maxFactor at scroll 100,
- * and has original size at scroll 150
+ * Above code will create scroll dependent rotation of an Image by 180 degrees
  */
-export class ZoomOut extends Component {
+export class Rotate extends Component {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
@@ -39,24 +37,35 @@ export class ZoomOut extends Component {
     children: React.PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
-     * children would zoom out from maxFactor
+     * children would rotate by an angle in axis
      */
     inputRange: React.PropTypes.array,
     /**
-     * from which factor children would zoom out
+     * rotation angle e.g. "90deg"
      */
-    maxFactor: React.PropTypes.number,
+    angle: React.PropTypes.string,
+    /**
+     * axis of rotation(x, y, z), z is default
+     */
+    axis: React.PropTypes.string,
     style: React.PropTypes.object,
-  }
+  };
 
   render() {
-    const { driver, children, inputRange = [0, 1], maxFactor = 1.5, style } = this.props;
+    const {
+      driver,
+      children,
+      inputRange = [0, 1],
+      angle = '360deg',
+      axis,
+      style
+    } = this.props;
 
     return (
       <View
         driver={driver}
-        animationName="zoomOut"
-        animationOptions={{ inputRange, maxFactor }}
+        animationName="rotate"
+        animationOptions={{ inputRange, angle, axis }}
         style={style}
       >
         {children}

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { ZoomOut } from './ZoomOut';
-import { Parallax } from './Parallax';
+import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
 /*
  * HeroHeader adds complex effect to its children components.
@@ -36,38 +34,12 @@ export class HeroHeader extends Component {
      */
     children: React.PropTypes.node,
   }
-  constructor(props) {
-    super(props);
-    this.onLayout = this.onLayout.bind(this);
-    this.state = {
-      height: 240,
-    };
-  }
-  onLayout(event) {
-    const { height } = event.nativeEvent.layout;
-    this.setState({ height });
-  }
-
   render() {
     const { driver, children } = this.props;
 
     return (
-      <View onLayout={this.onLayout}>
-        <ZoomOut
-          driver={driver}
-          inputRange={[-(0.9 * this.state.height), 0]}
-          maxFactor={3}
-        >
-          <Parallax
-            driver={driver}
-            scrollSpeed={0.5}
-            insideScroll
-            header
-            extrapolation={{ extrapolateLeft: 'clamp' }}
-          >
-            {children}
-          </Parallax>
-        </ZoomOut>
+      <View animationName="hero" driver={driver}>
+        {children}
       </View>
     );
   }

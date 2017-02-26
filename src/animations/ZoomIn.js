@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, View } from 'react-native';
+import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
 /*
  * ZoomIn Component adds zoom in effect to its children components.
@@ -53,21 +53,14 @@ export class ZoomIn extends Component {
     const { driver, children, inputRange = [0, 1], maxFactor = 1.5, style } = this.props;
 
     return (
-      <Animated.View
-        style={[style, {
-          transform: [
-            {
-              scale: driver.value.interpolate({
-                inputRange,
-                outputRange: [1, maxFactor],
-                extrapolate: 'clamp',
-              }),
-            },
-          ],
-        }]}
+      <View
+        driver={driver}
+        animationName="zoomIn"
+        animationOptions={{ inputRange, maxFactor }}
+        style={style}
       >
         {children}
-      </Animated.View>
+      </View>
     );
   }
 }
