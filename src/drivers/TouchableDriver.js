@@ -3,6 +3,8 @@ import {
   Easing,
 } from 'react-native';
 
+import { DriverBase } from './DriverBase';
+
 /**
  * Returns the default animation callback to use.
  *
@@ -15,8 +17,8 @@ function defaultAnimation(value, toValue, animationOptions) {
   return Animated.timing(
     value,
     {
-      toValue: toValue,
-      ...animationOptions
+      toValue,
+      ...animationOptions,
     }
   );
 }
@@ -33,17 +35,19 @@ function defaultAnimation(value, toValue, animationOptions) {
  * ...
  * <ZoomIn driver={driver}>
  */
-export class TouchableDriver {
+export class TouchableDriver extends DriverBase {
 
   /**
    * @param {Object} options Animation options.
    */
   constructor(options) {
-    this.animationOptions = Object.assign({
+    super();
+
+    this.animationOptions = {
       easing: Easing.elastic(1),
       duration: 150,
-    }, options);
-    this.value = new Animated.Value(0);
+      ...options,
+    };
     this.onPressIn = this.onPressIn.bind(this);
     this.onPressOut = this.onPressOut.bind(this);
     this.touchableViewProps = {
