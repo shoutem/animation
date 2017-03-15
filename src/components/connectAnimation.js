@@ -139,6 +139,11 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
 
     static contextTypes = {
       animationDriver: DriverShape,
+      transformProps: React.PropTypes.func,
+    };
+
+    static childContextTypes = {
+      transformProps: React.PropTypes.func,
     };
 
     constructor(props, context) {
@@ -146,6 +151,7 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
       this.onLayout = this.onLayout.bind(this);
       this.resolveStyle = this.resolveStyle.bind(this);
       this.setWrappedInstance = this.setWrappedInstance.bind(this);
+      this.transformProps = this.transformProps.bind(this);
       this.state = {
         layout: {
           height: 0,
@@ -154,6 +160,12 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
           y: 0,
         },
         resolvedStyle: removeAnimationsFromStyle(props.style),
+      };
+    }
+
+    getChildContext() {
+      return {
+        transformProps: this.transformProps,
       };
     }
 
@@ -195,6 +207,29 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
       this.wrappedInstance = component;
     }
 
+    /**
+     * A helper function provided to child components that enables
+     * them to get the prop transformations that this component performs.
+     *
+     * @param props The component props to transform.
+     * @returns {*} The transformed props.
+     */
+    transformProps(props) {
+      const sourceProps = this.context.transformProps ?
+        this.context.transformProps(props) : props;
+
+      return {
+        ...sourceProps,
+        style: resolveAnimatedStyle({
+          props: sourceProps,
+          driver: this.getDriver(sourceProps, this.context),
+          animations,
+          layout: this.state.layout,
+          componentName: WrappedComponent.displayName || WrappedComponent.name,
+        }),
+      };
+    }
+
     render() {
       const { resolvedStyle } = this.state;
       const ConnectedComponent = isComponentAnimated(this.props) ?
@@ -213,4 +248,4 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
   }
 
   return hoistStatics(AnimatedComponent, WrappedComponent);
-};
+}

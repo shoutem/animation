@@ -3,6 +3,8 @@ import {
   Easing,
 } from 'react-native';
 
+import { DriverBase } from './DriverBase';
+
 /**
  * Animation driver that creates animated value changed with time.
  * Pass instance to any @shoutem/animation animation to run it
@@ -22,13 +24,16 @@ import {
  * http://facebook.github.io/react-native/releases/0.30/docs/animations.html#core-api
  * for animation options
  */
-export class TimingDriver {
+export class TimingDriver extends DriverBase {
   constructor(options) {
-    this.animationOptions = Object.assign({
+    super();
+
+    this.animationOptions = {
       easing: Easing.cubic,
       duration: 250,
-    }, options);
-    this.value = new Animated.Value(0);
+      ...options,
+    };
+
     this.runTimer = this.runTimer.bind(this);
   }
 
