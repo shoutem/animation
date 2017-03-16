@@ -28,7 +28,7 @@ import { DriverBase } from './DriverBase';
  *   Used only if `useNativeDriver` is `true`, defaults to 20ms.
  */
 export class ScrollDriver extends DriverBase {
-  constructor(options = { useNativeDriver: true, nativeScrollEventThrottle: 20 }) {
+  constructor(options = { useNativeDriver: false, nativeScrollEventThrottle: 20 }) {
     super();
 
     if (options.useNativeDriver) {
