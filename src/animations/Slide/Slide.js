@@ -43,11 +43,11 @@ class Slide extends Component {
     const offset = direction.split(' ').reduce((offset = {}, position) => {
       if (position.toLowerCase() === "top") {
         offset['y'] = -(layout.pageY + layout.height);
-      } else if (position.toLowerCase() === "right") {
+      } else if (position.toLowerCase() === "left") {
         offset['x'] = -(layout.pageX + layout.width);
       } else if (position.toLowerCase() === "bottom") {
         offset['y'] = layout.pageY + layout.height;
-      } else if (position.toLowerCase() === "left") {
+      } else if (position.toLowerCase() === "right") {
         offset['x'] = layout.pageX + layout.width;
       }
       return offset;
