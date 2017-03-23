@@ -51,7 +51,7 @@ export class FadeIn extends Component {
         driver={driver}
         animationName="fadeIn"
         animationOptions={{ inputRange }}
-        style={style}
+        style={{ opacity: 0, ...style }}
       >
         {children}
       </View>
