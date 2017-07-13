@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
 /*
@@ -32,7 +33,7 @@ export class HeroHeader extends Component {
     /**
      * Components to which an effect will be applied
      */
-    children: React.PropTypes.node,
+    children: PropTypes.node,
   }
   render() {
     const { driver, children } = this.props;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View } from './../View';
 import { DriverShape } from '../../drivers/DriverShape';
 import { measure } from '../../components/measure';
@@ -12,18 +13,18 @@ class Slide extends Component {
     /**
      * Components to which an effect will be applied
      */
-    children: React.PropTypes.node,
+    children: PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
      * children would slide
      */
-    inputRange: React.PropTypes.array,
+    inputRange: PropTypes.array,
     /**
      * direction of where children would slide to e.g. "top right"
      */
-    direction: React.PropTypes.string,
-    animationName: React.PropTypes.string,
-    style: React.PropTypes.object,
+    direction: PropTypes.string,
+    animationName: PropTypes.string,
+    style: PropTypes.object,
   };
 
   render() {
