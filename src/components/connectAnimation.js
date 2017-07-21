@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Animated } from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
 import * as _ from 'lodash';
@@ -20,10 +20,12 @@ function removeAnimationsFromStyle(style) {
  * and it does that recursively because sometimes style is an object/array
  * which contains styles created by animated interpolations
  */
-function transferAnimatedValues(styleValue, animatedStyleValue, key) {
-  if(_.isFunction(animatedStyleValue.interpolate) || _.isUndefined(styleValue)) {
+function transferAnimatedValues(styleValue, animatedStyleValue) {
+  if (_.isFunction(animatedStyleValue.interpolate) || _.isUndefined(styleValue)) {
     return animatedStyleValue;
   }
+
+  return undefined;
 }
 
 function resolveAnimatedStyle({
@@ -96,11 +98,17 @@ const defaultOptions = {
  *   to false if your component already knows how to work with animated style values.
  */
 export function connectAnimation(WrappedComponent, animations = {}, options = defaultOptions) {
+  function getComponentDisplayName() {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+  }
+
+  const componentDisplayName = getComponentDisplayName();
+
   const AnimatedWrappedComponent = options.createAnimatedComponent ?
     Animated.createAnimatedComponent(WrappedComponent) :
     WrappedComponent;
 
-  class AnimatedComponent extends Component {
+  class AnimatedComponent extends React.PureComponent {
     static propTypes = {
       /**
        * Animation Driver an instance of driver that will be used to create animated style
@@ -146,12 +154,15 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
       transformProps: React.PropTypes.func,
     };
 
+    static displayName = `Animated(${componentDisplayName})`;
+
     constructor(props, context) {
       super(props, context);
       this.onLayout = this.onLayout.bind(this);
       this.resolveStyle = this.resolveStyle.bind(this);
       this.setWrappedInstance = this.setWrappedInstance.bind(this);
       this.transformProps = this.transformProps.bind(this);
+
       this.state = {
         layout: {
           height: 0,
@@ -170,7 +181,9 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-      this.resolveStyle(nextProps, this.getDriver(nextProps, nextContext));
+      if (this.shouldRebuildStyle(nextProps, nextContext)) {
+        this.resolveStyle(nextProps, this.getDriver(nextProps, nextContext));
+      }
     }
 
     onLayout(event) {
@@ -183,6 +196,13 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
 
     getDriver(props = this.props, context = this.context) {
       return props.driver || context.animationDriver;
+    }
+
+    shouldRebuildStyle(nextProps, nextContext) {
+      return nextProps.style !== this.props.style ||
+        nextProps.animation !== this.props.animation ||
+        nextProps.animationName !== this.props.animationName ||
+        this.getDriver(nextProps, nextContext) !== this.getDriver(this.props, this.context);
     }
 
     resolveStyle(props, driver) {
