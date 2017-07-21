@@ -199,7 +199,8 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
     }
 
     shouldRebuildStyle(nextProps, nextContext) {
-      return nextProps.animation !== this.props.animation ||
+      return nextProps.style !== this.props.style ||
+        nextProps.animation !== this.props.animation ||
         nextProps.animationName !== this.props.animationName ||
         this.getDriver(nextProps, nextContext) !== this.getDriver(this.props, this.context);
     }
