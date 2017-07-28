@@ -6,13 +6,12 @@ import {
 import { DriverBase } from './DriverBase';
 
 /**
- * Animation driver that creates animated value changed with time.
+ * Animation driver that creates animated value changed with tension and friction.
  * Pass instance to any @shoutem/animation animation to run it
  * e.g.:
- * driver = new TimingDriver({
- *   duration: 400 // 250 by default,
- *   easing: Easing.inOut // Easing.cubic is passed by default
- *   delay: 200 // 0 by default
+ * driver = new SpringDriver({
+ *   friction: 4 // 7 by default,
+ *   tension: 20 // 40 by default
  * });
  * return (
  *   <FadeIn driver={driver}>
@@ -24,32 +23,26 @@ import { DriverBase } from './DriverBase';
  * http://facebook.github.io/react-native/releases/0.30/docs/animations.html#core-api
  * for animation options
  */
-export class TimingDriver extends DriverBase {
+export class SpringDriver extends DriverBase {
   constructor(options) {
     super();
 
     this.animationOptions = {
-      easing: Easing.cubic,
-      duration: 250,
+      friction: 7,
+      tension: 40,
       ...options,
     };
 
-    this.runTimer = this.runTimer.bind(this);
     this.toValue = this.toValue.bind(this);
   }
 
   toValue(endValue, onFinish) {
-    Animated.timing(
+    Animated.spring(
       this.value,
       {
         toValue: endValue,
         ...this.animationOptions,
       }
     ).start(onFinish);
-  }
-
-  runTimer(endValue, onFinish) {
-    console.warn('runTimer will be deprecated soon, use toValue instead.');
-    this.toValue(endValue, onFinish);
   }
 }

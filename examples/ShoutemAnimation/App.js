@@ -27,48 +27,50 @@ const examples = {
 export class App extends Component {
   constructor() {
     super();
+    this.components = [{
+      example: 'Parallax',
+      component: 'Parallax',
+    }, {
+      example: 'Hero Header + ScrollDriver Animations',
+      component: 'HeroHeader',
+    }, {
+      example: 'FadeIn + FadeOut (TimingDriver)',
+      component: 'FadeInOut',
+    }, {
+      example: 'ZoomIn + ZoomOut (TimingDriver)',
+      component: 'ZoomInOut',
+    }, {
+      example: 'ZoomIn (TouchableDriver)',
+      component: 'ZoomInTouchable',
+    }, {
+      example: 'Rotate (TimingDriver)',
+      component: 'Rotate',
+    }, {
+      example: 'SlideIn + SlideOut (TimingDriver)',
+      component: 'SlideInOut',
+    }];
+
     this.state = {
-      selectedComponent: 'Parallax',
+      selectedComponent: this.components[0],
     };
   }
 
   render() {
-    const { selectedComponent } = this.state;
-    const SelectedComponent = examples[selectedComponent];
+    const SelectedComponent = examples[this.state.selectedComponent.component];
     return (
       <Screen>
         <Divider />
         <DropDownMenu
           styleName="horizontal"
-          options={[{
-            example: 'Parallax',
-            component: 'Parallax',
-          }, {
-            example: 'Hero Header + ScrollDriver Animations',
-            component: 'HeroHeader',
-          }, {
-            example: 'FadeIn + FadeOut (TimingDriver)',
-            component: 'FadeInOut',
-          }, {
-            example: 'ZoomIn + ZoomOut (TimingDriver)',
-            component: 'ZoomInOut',
-          }, {
-            example: 'ZoomIn (TouchableDriver)',
-            component: 'ZoomInTouchable',
-          }, {
-            example: 'Rotate (TimingDriver)',
-            component: 'Rotate',
-          }, {
-            example: 'SlideIn + SlideOut (TimingDriver)',
-            component: 'SlideInOut',
-          }]}
-          onOptionSelected={(option) => this.setState({ selectedComponent: option.component })}
+          options={this.components}
+          selectedOption={this.state.selectedComponent}
+          onOptionSelected={(option) => this.setState({ selectedComponent: option })}
           titleProperty="example"
           valueProperty="component"
         />
+
         <SelectedComponent />
       </Screen>
     );
   }
 }
-
