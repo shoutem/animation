@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
 /*
@@ -36,17 +37,17 @@ export class ZoomOut extends Component {
     /**
      * Components to which an effect will be applied
      */
-    children: React.PropTypes.node,
+    children: PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
      * children would zoom out from maxFactor
      */
-    inputRange: React.PropTypes.array,
+    inputRange: PropTypes.array,
     /**
      * from which factor children would zoom out
      */
-    maxFactor: React.PropTypes.number,
-    style: React.PropTypes.object,
+    maxFactor: PropTypes.number,
+    style: PropTypes.object,
   }
 
   render() {

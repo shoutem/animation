@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
 /*
@@ -34,21 +35,21 @@ export class Rotate extends Component {
     /**
      * Components to which an effect will be applied
      */
-    children: React.PropTypes.node,
+    children: PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
      * children would rotate by an angle in axis
      */
-    inputRange: React.PropTypes.array,
+    inputRange: PropTypes.array,
     /**
      * rotation angle e.g. "90deg"
      */
-    angle: React.PropTypes.string,
+    angle: PropTypes.string,
     /**
      * axis of rotation(x, y, z), z is default
      */
-    axis: React.PropTypes.string,
-    style: React.PropTypes.object,
+    axis: PropTypes.string,
+    style: PropTypes.object,
   };
 
   render() {

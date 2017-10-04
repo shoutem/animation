@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "hoist-non-react-statics": "^1.2.0",
-    "lodash": "^4.15.0"
+    "lodash": "^4.15.0",
+    "prop-types": "^15.6.0"
   },
   "peerDependencies": {
     "react": "^15.0.0",
