@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Slide } from './Slide';
 import { DriverShape } from '../../drivers/DriverShape';
 
@@ -36,17 +37,17 @@ export class SlideIn extends Component {
     /**
      * Components to which an effect will be applied
      */
-    children: React.PropTypes.node,
+    children: PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
      * children would slide in
      */
-    inputRange: React.PropTypes.array,
+    inputRange: PropTypes.array,
     /**
      * position from where wrapped components should slide in
      */
-    from: React.PropTypes.string,
-    style: React.PropTypes.object,
+    from: PropTypes.string,
+    style: PropTypes.object,
   };
 
   render() {

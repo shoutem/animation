@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Animated } from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
 import * as _ from 'lodash';
@@ -117,18 +118,18 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
       /**
        * Component style (could contain animation functions)
        */
-      style: React.PropTypes.object,
+      style: PropTypes.object,
       /**
        * Animation name it should match `${animationName}Animation` function passed in
        * animations collection or component's style.
        * e.g. if animationName is fadeOut there should exist function fadeOutAnimation
        * in animations or style
        */
-      animationName: React.PropTypes.string,
+      animationName: PropTypes.string,
       /**
        * Options that would be passed to animation through context
        */
-      animationOptions: React.PropTypes.object,
+      animationOptions: PropTypes.object,
       /**
        * Explicit animation function declaration with signature:
        * function (driver, context) {
@@ -138,7 +139,7 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
        * }
        * and it should return style object
        */
-      animation: React.PropTypes.func,
+      animation: PropTypes.func,
     };
 
     static defaultProps = {
@@ -147,11 +148,11 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
 
     static contextTypes = {
       animationDriver: DriverShape,
-      transformProps: React.PropTypes.func,
+      transformProps: PropTypes.func,
     };
 
     static childContextTypes = {
-      transformProps: React.PropTypes.func,
+      transformProps: PropTypes.func,
     };
 
     static displayName = `Animated(${componentDisplayName})`;
