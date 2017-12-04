@@ -1,14 +1,26 @@
 {
-  "name": "ShoutemAnimation",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
-  },
-  "dependencies": {
-    "@shoutem/animation": "^0.10.2",
-    "@shoutem/ui": "0.12.0",
-    "react": "15.4.0",
-    "react-native": "^0.41.2"
-  }
+	"name": "ShoutemAnimation",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node node_modules/react-native/local-cli/cli.js start",
+		"test": "jest"
+	},
+	"dependencies": {
+		"react": "16.0.0",
+		"react-native": "0.50.4",
+		"@shoutem/ui": "0.22.0",
+		"@shoutem/animation": "0.12.0",
+		"@shoutem/theme": "0.11.0",
+		"prop-types": "^15.5.10"
+	},
+	"devDependencies": {
+		"babel-jest": "21.2.0",
+		"babel-preset-react-native": "4.0.0",
+		"jest": "21.2.1",
+		"react-test-renderer": "16.0.0"
+	},
+	"jest": {
+		"preset": "react-native"
+	}
 }
