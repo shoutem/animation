@@ -53,7 +53,7 @@ import {
   ScrollDriver,
 } from '@shoutem/animation';
 
-class HelloWorld extends Component {
+export default class App extends Component<{}> {
   render() {
     // Create new ScrollDriver that will animate animations
     // when passing through scroll positions in input range
@@ -87,8 +87,6 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
 ```
 
 Finally, run the app!
@@ -113,7 +111,7 @@ Shoutem UI is a part of the Shoutem UI Toolkit that enables you to build profess
 It consists of three libraries:
 
 - [@shoutem/ui](https://github.com/shoutem/ui): beautiful and customizable UI components
-- [@shoutem/theme](https://github.com/shoutem/theme): “CSS-way” of styling entire app 
+- [@shoutem/theme](https://github.com/shoutem/theme): “CSS-way” of styling entire app
 - [@shoutem/animation](https://github.com/shoutem/animation): declarative way of applying ready-made  animations
 
 ## License
