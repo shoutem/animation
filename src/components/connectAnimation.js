@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Animated } from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
 import * as _ from 'lodash';
@@ -20,10 +21,12 @@ function removeAnimationsFromStyle(style) {
  * and it does that recursively because sometimes style is an object/array
  * which contains styles created by animated interpolations
  */
-function transferAnimatedValues(styleValue, animatedStyleValue, key) {
-  if(_.isFunction(animatedStyleValue.interpolate) || _.isUndefined(styleValue)) {
+function transferAnimatedValues(styleValue, animatedStyleValue) {
+  if (_.isFunction(animatedStyleValue.interpolate) || _.isUndefined(styleValue)) {
     return animatedStyleValue;
   }
+
+  return undefined;
 }
 
 function resolveAnimatedStyle({
@@ -96,11 +99,17 @@ const defaultOptions = {
  *   to false if your component already knows how to work with animated style values.
  */
 export function connectAnimation(WrappedComponent, animations = {}, options = defaultOptions) {
+  function getComponentDisplayName() {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+  }
+
+  const componentDisplayName = getComponentDisplayName();
+
   const AnimatedWrappedComponent = options.createAnimatedComponent ?
     Animated.createAnimatedComponent(WrappedComponent) :
     WrappedComponent;
 
-  class AnimatedComponent extends Component {
+  class AnimatedComponent extends React.PureComponent {
     static propTypes = {
       /**
        * Animation Driver an instance of driver that will be used to create animated style
@@ -109,18 +118,18 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
       /**
        * Component style (could contain animation functions)
        */
-      style: React.PropTypes.object,
+      style: PropTypes.object,
       /**
        * Animation name it should match `${animationName}Animation` function passed in
        * animations collection or component's style.
        * e.g. if animationName is fadeOut there should exist function fadeOutAnimation
        * in animations or style
        */
-      animationName: React.PropTypes.string,
+      animationName: PropTypes.string,
       /**
        * Options that would be passed to animation through context
        */
-      animationOptions: React.PropTypes.object,
+      animationOptions: PropTypes.object,
       /**
        * Explicit animation function declaration with signature:
        * function (driver, context) {
@@ -130,7 +139,7 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
        * }
        * and it should return style object
        */
-      animation: React.PropTypes.func,
+      animation: PropTypes.func,
     };
 
     static defaultProps = {
@@ -139,12 +148,14 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
 
     static contextTypes = {
       animationDriver: DriverShape,
-      transformProps: React.PropTypes.func,
+      transformProps: PropTypes.func,
     };
 
     static childContextTypes = {
-      transformProps: React.PropTypes.func,
+      transformProps: PropTypes.func,
     };
+
+    static displayName = `Animated(${componentDisplayName})`;
 
     constructor(props, context) {
       super(props, context);
@@ -152,6 +163,7 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
       this.resolveStyle = this.resolveStyle.bind(this);
       this.setWrappedInstance = this.setWrappedInstance.bind(this);
       this.transformProps = this.transformProps.bind(this);
+
       this.state = {
         layout: {
           height: 0,
@@ -170,7 +182,9 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-      this.resolveStyle(nextProps, this.getDriver(nextProps, nextContext));
+      if (this.shouldRebuildStyle(nextProps, nextContext)) {
+        this.resolveStyle(nextProps, this.getDriver(nextProps, nextContext));
+      }
     }
 
     onLayout(event) {
@@ -183,6 +197,13 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
 
     getDriver(props = this.props, context = this.context) {
       return props.driver || context.animationDriver;
+    }
+
+    shouldRebuildStyle(nextProps, nextContext) {
+      return nextProps.style !== this.props.style ||
+        nextProps.animation !== this.props.animation ||
+        nextProps.animationName !== this.props.animationName ||
+        this.getDriver(nextProps, nextContext) !== this.getDriver(this.props, this.context);
     }
 
     resolveStyle(props, driver) {

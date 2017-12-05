@@ -1,6 +1,6 @@
 {
   "name": "@shoutem/animation",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "Shoutem Animation Library",
   "main": "index.js",
   "repository": {
@@ -12,8 +12,9 @@
     "lodash": "^4.15.0"
   },
   "peerDependencies": {
-    "react": "^15.0.0",
-    "react-native": ">=0.28.0"
+    "react": "16.0.0",
+    "react-native": ">=0.46.1",
+    "prop-types": "^15.5.10"
   },
   "keywords": [
     "React",

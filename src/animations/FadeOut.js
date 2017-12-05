@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
 /*
@@ -35,13 +36,13 @@ export class FadeOut extends Component {
     /**
      * Components to which an effect will be applied
      */
-    children: React.PropTypes.node,
+    children: PropTypes.node,
     /**
      * pair of [start, end] values from animation driver, how
      * children would fade out
      */
-    inputRange: React.PropTypes.array,
-    style: React.PropTypes.object,
+    inputRange: PropTypes.array,
+    style: PropTypes.object,
   }
 
   render() {
