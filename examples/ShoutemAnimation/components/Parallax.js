@@ -27,7 +27,7 @@ export default class ParallaxExample extends Component {
 
   renderRow(restaurant) {
     return (
-      <Image
+      <ImageBackground
         styleName="large-banner"
         source={{ uri: restaurant.image.url }}
         key={restaurant.name}
@@ -38,7 +38,7 @@ export default class ParallaxExample extends Component {
             <Subtitle>{restaurant.address}</Subtitle>
           </Parallax>
         </Tile>
-      </Image>
+      </ImageBackground>
     );
   }
 
@@ -50,4 +50,3 @@ export default class ParallaxExample extends Component {
     );
   }
 }
-

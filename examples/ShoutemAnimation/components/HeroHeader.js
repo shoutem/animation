@@ -29,7 +29,7 @@ export default class HeroHeaderExample extends Component {
     return (
       <ScrollView {...driver.scrollViewProps}>
         <HeroHeader driver={driver}>
-          <Image
+          <ImageBackground
             styleName="large-banner"
             source={{ uri: restaurant.image.url }}
             key={restaurant.name}
@@ -44,7 +44,7 @@ export default class HeroHeaderExample extends Component {
                 </FadeIn>
               </Parallax>
             </Tile>
-          </Image>
+          </ImageBackground>
         </HeroHeader>
         <View
           styleName="content"
@@ -70,4 +70,3 @@ export default class HeroHeaderExample extends Component {
     );
   }
 }
-
