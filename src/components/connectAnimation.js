@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Animated } from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
@@ -109,7 +109,7 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
     Animated.createAnimatedComponent(WrappedComponent) :
     WrappedComponent;
 
-  class AnimatedComponent extends React.PureComponent {
+  class AnimatedComponent extends PureComponent {
     static propTypes = {
       /**
        * Animation Driver an instance of driver that will be used to create animated style
@@ -203,6 +203,7 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
       return nextProps.style !== this.props.style ||
         nextProps.animation !== this.props.animation ||
         nextProps.animationName !== this.props.animationName ||
+        JSON.stringify(nextProps.animationOptions) !== JSON.stringify(this.props.animationOptions) ||
         this.getDriver(nextProps, nextContext) !== this.getDriver(this.props, this.context);
     }
 
