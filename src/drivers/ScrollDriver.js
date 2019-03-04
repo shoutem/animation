@@ -28,7 +28,7 @@ import { DriverBase } from './DriverBase';
  *   Used only if `useNativeDriver` is `true`, defaults to 20ms.
  */
 export class ScrollDriver extends DriverBase {
-  constructor(options = { useNativeDriver: false, nativeScrollEventThrottle: 20 }) {
+  constructor(options = { useNativeDriver: false, horizontal: false, nativeScrollEventThrottle: 20, onScroll: (value) => {} }) {
     super();
 
     if (options.useNativeDriver) {
@@ -36,6 +36,7 @@ export class ScrollDriver extends DriverBase {
 
       this.nativeValue.addListener(_.debounce(({ value }) => {
         this.value.setValue(value);
+        options.onScroll(value)
       }), options.nativeScrollEventThrottle);
     }
 
@@ -44,9 +45,10 @@ export class ScrollDriver extends DriverBase {
     this.onScrollViewLayout = this.onScrollViewLayout.bind(this);
     this.scrollViewProps = {
       onScroll: Animated.event(
-        [{ nativeEvent: { contentOffset: { y: this.primaryValue } } }],
+        [{ nativeEvent: { contentOffset: options.horizontal ? { x: this.primaryValue } : {y: this.primaryValue} } }],
         { useNativeDriver: options.useNativeDriver }
       ),
+      horizontal: options.horizontal,
       scrollEventThrottle: 1,
       onLayout: this.onScrollViewLayout,
     };
