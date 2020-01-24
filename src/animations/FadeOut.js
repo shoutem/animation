@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
@@ -27,7 +27,7 @@ import { DriverShape } from '../drivers/DriverShape';
  * from scroll 100, to scroll 150 where image is opaque at scroll 100,
  * and fully transparent at scroll 150
  */
-export class FadeOut extends Component {
+export class FadeOut extends PureComponent {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver

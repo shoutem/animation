@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Animated } from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 import { DriverShape } from '../drivers/DriverShape';
 
@@ -109,7 +109,7 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
     Animated.createAnimatedComponent(WrappedComponent) :
     WrappedComponent;
 
-  class AnimatedComponent extends React.PureComponent {
+  class AnimatedComponent extends PureComponent {
     static propTypes = {
       /**
        * Animation Driver an instance of driver that will be used to create animated style
@@ -159,6 +159,7 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
 
     constructor(props, context) {
       super(props, context);
+
       this.onLayout = this.onLayout.bind(this);
       this.resolveStyle = this.resolveStyle.bind(this);
       this.setWrappedInstance = this.setWrappedInstance.bind(this);
@@ -175,21 +176,29 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
       };
     }
 
+    componentDidUpdate(prevProps) {
+      if (this.shouldRebuildStyle(prevProps)) {
+        this.resolveStyle(this.props, this.getDriver());
+      }
+    }
+
     getChildContext() {
       return {
         transformProps: this.transformProps,
       };
     }
 
-    componentWillReceiveProps(nextProps, nextContext) {
-      if (this.shouldRebuildStyle(nextProps, nextContext)) {
-        this.resolveStyle(nextProps, this.getDriver(nextProps, nextContext));
-      }
+    shouldRebuildStyle(prevProps) {
+      return prevProps.style !== this.props.style ||
+        prevProps.animation !== this.props.animation ||
+        prevProps.animationName !== this.props.animationName ||
+        this.getDriver(prevProps) !== this.getDriver(this.props);
     }
 
     onLayout(event) {
       const { layout } = event.nativeEvent;
       const driver = this.getDriver();
+
       if (!_.isEqual(layout, this.state.layout)) {
         this.setState({ layout }, () => this.resolveStyle(this.props, driver));
       }
@@ -197,13 +206,6 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
 
     getDriver(props = this.props, context = this.context) {
       return props.driver || context.animationDriver;
-    }
-
-    shouldRebuildStyle(nextProps, nextContext) {
-      return nextProps.style !== this.props.style ||
-        nextProps.animation !== this.props.animation ||
-        nextProps.animationName !== this.props.animationName ||
-        this.getDriver(nextProps, nextContext) !== this.getDriver(this.props, this.context);
     }
 
     resolveStyle(props, driver) {
@@ -236,8 +238,9 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
      * @returns {*} The transformed props.
      */
     transformProps(props) {
-      const sourceProps = this.context.transformProps ?
-        this.context.transformProps(props) : props;
+      const { transformProps } = this.context;
+
+      const sourceProps = transformProps ? transformProps(props) : props;
 
       return {
         ...sourceProps,
