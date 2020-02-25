@@ -10,7 +10,7 @@ import {
 } from '@shoutem/animation';
 
 import {
-  Image,
+  ImageBackground,
   Tile,
   Title,
   Text,

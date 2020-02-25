@@ -1,6 +1,4 @@
-import React, {
-  Component,
-} from 'react';
+import React, { PureComponent } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -62,7 +60,7 @@ export default function makeZoomable(ComponentToBeDecorated) {
    * within the view and updates the style of the decorated component with new values
    * for width, height and absolute position.
    */
-  class ZoomDecorator extends Component {
+  class ZoomDecorator extends PureComponent {
     static propTypes = {
       componentWidth: PropTypes.number.isRequired,
       componentHeight: PropTypes.number.isRequired,
@@ -95,7 +93,7 @@ export default function makeZoomable(ComponentToBeDecorated) {
       };
     }
 
-    componentWillMount() {
+    componentDidMount() {
       this._panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onStartShouldSetPanResponderCapture: () => true,
@@ -258,4 +256,3 @@ export default function makeZoomable(ComponentToBeDecorated) {
 
   return ZoomDecorator;
 }
-

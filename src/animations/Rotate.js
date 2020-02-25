@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
@@ -26,7 +26,7 @@ import { DriverShape } from '../drivers/DriverShape';
  * ...
  * Above code will create scroll dependent rotation of an Image by 180 degrees
  */
-export class Rotate extends Component {
+export class Rotate extends PureComponent {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
