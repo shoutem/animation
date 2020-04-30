@@ -8,13 +8,13 @@
     "url": "git+ssh://git@github.com:shoutem/animation.git"
   },
   "dependencies": {
-    "hoist-non-react-statics": "^1.2.0",
-    "lodash": "~4.17.4"
+    "hoist-non-react-statics": "^3.3.2",
+    "lodash": "4.17.15"
   },
   "peerDependencies": {
-    "react": "16.0.0",
-    "react-native": ">=0.46.1",
-    "prop-types": "^15.5.10"
+    "react": "16.8.6",
+    "react-native": "0.60.6",
+    "prop-types": "15.7.2"
   },
   "keywords": [
     "React",
