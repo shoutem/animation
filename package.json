@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "hoist-non-react-statics": "^3.3.2",
-    "lodash": "4.17.15"
+    "lodash": "4.17.19"
   },
   "peerDependencies": {
     "react": "16.8.6",
