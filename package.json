@@ -9,12 +9,12 @@
   },
   "dependencies": {
     "hoist-non-react-statics": "^3.3.2",
-    "lodash": "4.17.15"
+    "lodash": "4.17.19"
   },
   "peerDependencies": {
-    "react": "16.8.6",
-    "react-native": "0.60.6",
-    "prop-types": "15.7.2"
+    "react": ">=16.8.6",
+    "react-native": ">=0.60.6",
+    "prop-types": ">=15.7.2"
   },
   "keywords": [
     "React",
