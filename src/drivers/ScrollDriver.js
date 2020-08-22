@@ -1,7 +1,8 @@
 import { Animated } from 'react-native';
+import autoBind from 'auto-bind';
 import _ from 'lodash';
 
-import { DriverBase } from './DriverBase';
+import DriverBase from './DriverBase';
 
 /**
  * Animation driver that creates animated value changed on scroll event.
@@ -27,9 +28,11 @@ import { DriverBase } from './DriverBase';
  *   will be debounced using this value when mirroring them to the JS value.
  *   Used only if `useNativeDriver` is `true`, defaults to 20ms.
  */
-export class ScrollDriver extends DriverBase {
+export default class ScrollDriver extends DriverBase {
   constructor(options = { useNativeDriver: false, nativeScrollEventThrottle: 20 }) {
     super();
+
+    autoBind(this);
 
     if (options.useNativeDriver) {
       this.nativeValue = new Animated.Value(0);
@@ -40,12 +43,10 @@ export class ScrollDriver extends DriverBase {
     }
 
     this.primaryValue = this.nativeValue || this.value;
-
-    this.onScrollViewLayout = this.onScrollViewLayout.bind(this);
     this.scrollViewProps = {
       onScroll: Animated.event(
         [{ nativeEvent: { contentOffset: { y: this.primaryValue } } }],
-        { useNativeDriver: options.useNativeDriver }
+        { useNativeDriver: options.useNativeDriver },
       ),
       scrollEventThrottle: 1,
       onLayout: this.onScrollViewLayout,
@@ -68,7 +69,7 @@ export class ScrollDriver extends DriverBase {
    * @returns {*} The animated interpolation.
    */
   interpolate(config) {
-    let value = this.value;
+    let { value } = this;
     if (config.useNativeDriver && this.nativeValue) {
       value = this.nativeValue;
     }

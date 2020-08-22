@@ -1,9 +1,7 @@
-import {
-  Animated,
-  Easing,
-} from 'react-native';
+import { Animated, Easing } from 'react-native';
+import autoBind from 'auto-bind';
 
-import { DriverBase } from './DriverBase';
+import DriverBase from './DriverBase';
 
 /**
  * Animation driver that creates animated value changed with time.
@@ -24,28 +22,21 @@ import { DriverBase } from './DriverBase';
  * http://facebook.github.io/react-native/releases/0.30/docs/animations.html#core-api
  * for animation options
  */
-export class TimingDriver extends DriverBase {
+export default class TimingDriver extends DriverBase {
   constructor(options) {
     super();
+
+    autoBind(this);
 
     this.animationOptions = {
       easing: Easing.cubic,
       duration: 250,
       ...options,
     };
-
-    this.runTimer = this.runTimer.bind(this);
-    this.toValue = this.toValue.bind(this);
   }
 
   toValue(endValue, onFinish) {
-    Animated.timing(
-      this.value,
-      {
-        toValue: endValue,
-        ...this.animationOptions,
-      }
-    ).start(onFinish);
+    Animated.timing(this.value, { toValue: endValue, ...this.animationOptions }).start(onFinish);
   }
 
   runTimer(endValue, onFinish) {

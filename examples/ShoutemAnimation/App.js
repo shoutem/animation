@@ -1,13 +1,7 @@
-import React, { Component } from 'react';
-import {
-  AnimationExamples
-} from './components/AnimationExamples';
+import React from 'react';
 
+import AnimationExamples from './components/AnimationExamples';
 
-export default class App extends Component {
-  render() {
-    return (
-      <AnimationExamples />
-    );
-  }
-}
+// import/prefer-default-export const cannot be default export
+// eslint-disable-next-line
+export const App = () => <AnimationExamples />;

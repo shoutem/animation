@@ -1,19 +1,19 @@
 export { default as makeZoomable } from './src/components/ZoomableComponent';
-export { ScrollDriver } from './src/drivers/ScrollDriver';
-export { TimingDriver } from './src/drivers/TimingDriver';
-export { SpringDriver } from './src/drivers/SpringDriver';
-export { TouchableDriver } from './src/drivers/TouchableDriver';
+export { default as ScrollDriver } from './src/drivers/ScrollDriver';
+export { default as TimingDriver } from './src/drivers/TimingDriver';
+export { default as SpringDriver } from './src/drivers/SpringDriver';
+export { default as TouchableDriver } from './src/drivers/TouchableDriver';
 export { Parallax } from './src/animations/Parallax';
-export { FadeIn } from './src/animations/FadeIn';
-export { FadeOut } from './src/animations/FadeOut';
-export { ZoomIn } from './src/animations/ZoomIn';
-export { ZoomOut } from './src/animations/ZoomOut';
-export { SlideIn } from './src/animations/Slide/SlideIn';
-export { SlideOut } from './src/animations/Slide/SlideOut';
-export { Rotate } from './src/animations/Rotate';
-export { HeroHeader } from './src/animations/HeroHeader';
+export { default as FadeIn } from './src/animations/FadeIn';
+export { default as FadeOut } from './src/animations/FadeOut';
+export { default as ZoomIn } from './src/animations/ZoomIn';
+export { default as ZoomOut } from './src/animations/ZoomOut';
+export { default as SlideIn } from './src/animations/Slide/SlideIn';
+export { default as SlideOut } from './src/animations/Slide/SlideOut';
+export { default as Rotate } from './src/animations/Rotate';
+export { default as HeroHeader } from './src/animations/HeroHeader';
 export { DriverShape } from './src/drivers/DriverShape';
-export { connectAnimation } from './src/components/connectAnimation';
+export { default as connectAnimation } from './src/components/connectAnimation';
 export {
   isAnimatedStyleValue,
   getAnimatedStyleValue,

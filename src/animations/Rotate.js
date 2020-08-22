@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+
 import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
 /*
@@ -26,7 +27,7 @@ import { DriverShape } from '../drivers/DriverShape';
  * ...
  * Above code will create scroll dependent rotation of an Image by 180 degrees
  */
-export class Rotate extends PureComponent {
+export default class Rotate extends PureComponent {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
@@ -35,7 +36,7 @@ export class Rotate extends PureComponent {
     /**
      * Components to which an effect will be applied
      */
-    children: PropTypes.node,
+    children: PropTypes.node.isRequired,
     /**
      * pair of [start, end] values from animation driver, how
      * children would rotate by an angle in axis
@@ -52,14 +53,21 @@ export class Rotate extends PureComponent {
     style: PropTypes.object,
   };
 
+  static defaultProps = {
+    angle: '360deg',
+    axis: 'z',
+    inputRange: [0, 1],
+    style: {},
+  }
+
   render() {
     const {
       driver,
       children,
-      inputRange = [0, 1],
-      angle = '360deg',
+      inputRange,
+      angle,
       axis,
-      style
+      style,
     } = this.props;
 
     return (

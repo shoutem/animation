@@ -6,7 +6,7 @@ import { Animated } from 'react-native';
  * @param value The value to check.
  * @returns {boolean} `true` if a value is animated, `false` otherwise.
  */
-export const isAnimatedStyleValue = (value) => value && typeof value.interpolate === 'function';
+export const isAnimatedStyleValue = value => value && typeof value.interpolate === 'function';
 
 /**
  * Gets the current value of an animated style value. If

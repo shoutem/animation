@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
-import {
-  DropDownMenu,
-  Screen,
-  Divider,
-} from '@shoutem/ui';
+
+import { DropDownMenu, Screen, Divider } from '@shoutem/ui';
 
 import Parallax from './Parallax';
-import HeroHeader from './HeroHeader';
-import FadeInOut from './FadeInOut';
-import ZoomInOut from './ZoomInOut';
-import ZoomInTouchable from './ZoomInTouchable';
-import Rotate from './Rotate';
-import SlideInOut from './SlideInOut';
+import { HeroHeaderExample as HeroHeader } from './HeroHeader';
+import { FadeInOutExample as FadeInOut } from './FadeInOut';
+import { ZoomInOutExample as ZoomInOut } from './ZoomInOut';
+import { ZoomInTouchableExample as ZoomInTouchable } from './ZoomInTouchable';
+import { RotateExample as Rotate } from './Rotate';
+import { SlideInOutExample as SlideInOut } from './SlideInOut';
 
 const examples = {
   Parallax,
@@ -24,9 +20,10 @@ const examples = {
   SlideInOut,
 };
 
-export class AnimationExamples extends Component {
+export default class AnimationExamples extends Component {
   constructor() {
     super();
+
     this.components = [{
       example: 'Parallax',
       component: 'Parallax',
@@ -56,15 +53,18 @@ export class AnimationExamples extends Component {
   }
 
   render() {
-    const SelectedComponent = examples[this.state.selectedComponent.component];
+    const { selectedComponent } = this.state;
+
+    const SelectedComponent = examples[selectedComponent.component];
+
     return (
       <Screen>
         <Divider />
         <DropDownMenu
           styleName="horizontal"
           options={this.components}
-          selectedOption={this.state.selectedComponent}
-          onOptionSelected={(option) => this.setState({ selectedComponent: option })}
+          selectedOption={selectedComponent}
+          onOptionSelected={option => this.setState({ selectedComponent: option })}
           titleProperty="example"
           valueProperty="component"
         />

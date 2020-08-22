@@ -1,3 +1,5 @@
+// import/prefer-default-export const cannot be default export
+// eslint-disable-next-line
 export const animations = {
   heroAnimation(driver, { layout }) {
     return {
@@ -18,8 +20,10 @@ export const animations = {
       ],
     };
   },
+
   zoomOutAnimation(driver, { animationOptions }) {
     const { inputRange, maxFactor } = animationOptions;
+
     return {
       transform: [
         {
@@ -32,8 +36,10 @@ export const animations = {
       ],
     };
   },
+
   zoomInAnimation(driver, { animationOptions }) {
     const { inputRange, maxFactor } = animationOptions;
+
     return {
       transform: [
         {
@@ -46,6 +52,7 @@ export const animations = {
       ],
     };
   },
+
   fadeOutAnimation(driver, { animationOptions }) {
     const { inputRange } = animationOptions;
     return {
@@ -56,6 +63,7 @@ export const animations = {
       }),
     };
   },
+
   fadeInAnimation(driver, { animationOptions }) {
     const { inputRange } = animationOptions;
     return {
@@ -66,6 +74,7 @@ export const animations = {
       }),
     };
   },
+
   slideInAnimation(driver, { animationOptions }) {
     const { offset, inputRange } = animationOptions;
     const { x = 0, y = 0 } = offset;
@@ -85,13 +94,15 @@ export const animations = {
             outputRange: [x, 0],
             extrapolate: 'clamp',
           }),
-        }
+        },
       ],
     };
   },
+
   slideOutAnimation(driver, { animationOptions }) {
     const { offset, inputRange } = animationOptions;
     const { x = 0, y = 0 } = offset;
+
     return {
       transform: [
         {
@@ -106,23 +117,20 @@ export const animations = {
             outputRange: [0, x],
             extrapolate: 'clamp',
           }),
-        }
+        },
       ],
     };
   },
+
   rotateAnimation(driver, { animationOptions }) {
-    const {
-      inputRange,
-      axis = '',
-      angle
-    } = animationOptions;
+    const { inputRange, axis = '', angle } = animationOptions;
 
     return {
       transform: [
         {
           [`rotate${axis.toUpperCase()}`]: driver.value.interpolate({
             inputRange,
-            outputRange: ["0deg", angle],
+            outputRange: ['0deg', angle],
           }),
         },
       ],

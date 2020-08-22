@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
+import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
-import ReactNative, { Animated, View, Dimensions } from 'react-native';
+import autoBind from 'auto-bind';
 
+import measure from '../components/measure';
 import { DriverShape } from '../drivers/DriverShape';
-import { measure } from '../components/measure';
 /*
  * Parallax Component adds parallax effect to its children components.
  * Connect it to driver to animate it. By default children will by
@@ -40,7 +41,7 @@ class Parallax extends PureComponent {
     /**
      * Components to which an effect will be applied
      */
-    children: PropTypes.node,
+    children: PropTypes.node.isRequired,
     /**
      * extrapolation options for parallax translation
      * if not passed children would be translated by
@@ -65,30 +66,35 @@ class Parallax extends PureComponent {
   }
 
   static defaultProps = {
-    insideScroll: true,
+    extrapolation: undefined,
     header: false,
+    insideScroll: true,
+    scrollSpeed: 2,
+    style: {},
   }
 
   constructor(props) {
     super(props);
-    this.translation = new Animated.Value(0);
-    this.calculateTranslation = this.calculateTranslation.bind(this);
-  }
 
-  calculateTranslation(scrollOffset) {
-    const { layout: { pageY } } = this.state;
-    const { driver: { layout: { height: scrollHeight } } } = this.props;
-    this.translation.setValue(scrollOffset.value - (pageY - scrollHeight / 2));
+    autoBind(this);
+
+    this.translation = new Animated.Value(0);
   }
 
   componentDidMount() {
-    const { driver: { value: { addlistener } } } = this.props;
+    const { driver: { value: { addListener } } } = this.props;
     this.animationListener = addListener(this.calculateTranslation);
   }
 
   componentWillUnmount() {
     const { driver } = this.props;
     driver.value.removeListener(this.animationListener);
+  }
+
+  calculateTranslation(scrollOffset) {
+    const { driver: { layout: { height: scrollHeight } } } = this.props;
+    const { layout: { pageY } } = this.state;
+    this.translation.setValue(scrollOffset.value - (pageY - scrollHeight / 2));
   }
 
   render() {
@@ -127,6 +133,6 @@ class Parallax extends PureComponent {
 
 const measuredParralax = measure(Parallax);
 
-export {
-  measuredParralax as Parallax
-};
+// import/prefer-default-export const cannot be default export
+// eslint-disable-next-line
+export { measuredParralax as Parallax };

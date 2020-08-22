@@ -1,9 +1,7 @@
-import {
-  Animated,
-  Easing,
-} from 'react-native';
+import { Animated, Easing } from 'react-native';
+import autoBind from 'auto-bind';
 
-import { DriverBase } from './DriverBase';
+import DriverBase from './DriverBase';
 
 /**
  * Returns the default animation callback to use.
@@ -14,13 +12,7 @@ import { DriverBase } from './DriverBase';
  * @returns {CompositeAnimation}
  */
 function defaultAnimation(value, toValue, animationOptions) {
-  return Animated.timing(
-    value,
-    {
-      toValue,
-      ...animationOptions,
-    }
-  );
+  return Animated.timing(value, { toValue, ...animationOptions });
 }
 
 /**
@@ -35,21 +27,20 @@ function defaultAnimation(value, toValue, animationOptions) {
  * ...
  * <ZoomIn driver={driver}>
  */
-export class TouchableDriver extends DriverBase {
-
+export default class TouchableDriver extends DriverBase {
   /**
    * @param {Object} options Animation options.
    */
   constructor(options) {
     super();
 
+    autoBind(this);
+
     this.animationOptions = {
       easing: Easing.elastic(1),
       duration: 150,
       ...options,
     };
-    this.onPressIn = this.onPressIn.bind(this);
-    this.onPressOut = this.onPressOut.bind(this);
     this.touchableViewProps = {
       onPressIn: this.onPressIn,
       onPressOut: this.onPressOut,

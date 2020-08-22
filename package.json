@@ -3,13 +3,26 @@
   "version": "0.12.5",
   "description": "Shoutem Animation Library",
   "main": "index.js",
+  "scripts": {
+    "lint": "eslint ."
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:shoutem/animation.git"
   },
   "dependencies": {
+    "auto-bind": "4.0.0",
     "hoist-non-react-statics": "^3.3.2",
     "lodash": "4.17.19"
+  },
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint": "~5.15.1",
+    "eslint-config-airbnb": "~17.1.0",
+    "eslint-plugin-import": "~2.16.0",
+    "eslint-plugin-jsx-a11y": "~6.2.1",
+    "eslint-plugin-react": "~7.12.4",
+    "eslint-plugin-react-native": "~3.6.0"
   },
   "peerDependencies": {
     "react": ">=16.8.6",
