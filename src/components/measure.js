@@ -1,5 +1,5 @@
 import { UIManager, findNodeHandle } from 'react-native';
-import autoBind from 'auto-bind';
+import autoBind from 'auto-bind/react';
 
 export default function measure(Component) {
   class measuredComponent extends Component {

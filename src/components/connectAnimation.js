@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
-import autoBind from 'auto-bind';
+import autoBind from 'auto-bind/react';
 import hoistStatics from 'hoist-non-react-statics';
 import _ from 'lodash';
 

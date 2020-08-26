@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
-import autoBind from 'auto-bind';
+import autoBind from 'auto-bind/react';
 
 import { Parallax, ScrollDriver } from '@shoutem/animation';
 import {

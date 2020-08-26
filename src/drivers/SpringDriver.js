@@ -1,5 +1,5 @@
 import { Animated } from 'react-native';
-import autoBind from 'auto-bind';
+import autoBind from 'auto-bind/react';
 
 import DriverBase from './DriverBase';
 

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { View, PanResponder, LayoutAnimation } from 'react-native';
 import PropTypes from 'prop-types';
-import autoBind from 'auto-bind';
+import autoBind from 'auto-bind/react';
 
 function getDistanceBetweenTwoPoints({ x: x1, y: y1 }, { x: x2, y: y2 }) {
   const dx = Math.abs(x1 - x2);

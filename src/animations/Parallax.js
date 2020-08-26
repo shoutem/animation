@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
-import autoBind from 'auto-bind';
+import autoBind from 'auto-bind/react';
 
 import measure from '../components/measure';
 import { DriverShape } from '../drivers/DriverShape';
