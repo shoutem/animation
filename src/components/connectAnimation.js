@@ -1,10 +1,9 @@
 import React, { PureComponent } from 'react';
-import { Animated } from 'react-native';
-import PropTypes from 'prop-types';
-import autoBind from 'auto-bind/react';
+import autoBindReact from 'auto-bind/react';
 import hoistStatics from 'hoist-non-react-statics';
 import _ from 'lodash';
-
+import PropTypes from 'prop-types';
+import { Animated } from 'react-native';
 import { DriverShape } from '../drivers/DriverShape';
 
 const ANIMATION_SUFFIX = 'Animation';
@@ -14,7 +13,10 @@ function isComponentAnimated(props) {
 }
 
 function removeAnimationsFromStyle(style) {
-  return _.omitBy(style, (value, key) => _.isFunction(value) && _.endsWith(key, ANIMATION_SUFFIX));
+  return _.omitBy(
+    style,
+    (value, key) => _.isFunction(value) && _.endsWith(key, ANIMATION_SUFFIX),
+  );
 }
 
 /**
@@ -23,7 +25,10 @@ function removeAnimationsFromStyle(style) {
  * which contains styles created by animated interpolations
  */
 function transferAnimatedValues(styleValue, animatedStyleValue) {
-  if (_.isFunction(animatedStyleValue.interpolate) || _.isUndefined(styleValue)) {
+  if (
+    _.isFunction(animatedStyleValue.interpolate) ||
+    _.isUndefined(styleValue)
+  ) {
     return animatedStyleValue;
   }
 
@@ -37,35 +42,42 @@ function resolveAnimatedStyle({
   layout = {},
   componentName = 'component',
 }) {
-  const {
-    style,
-    animation,
-    animationName,
-    animationOptions,
-  } = props;
+  const { style, animation, animationName, animationOptions } = props;
 
   if (!isComponentAnimated(props)) {
     return removeAnimationsFromStyle(style);
   }
 
-  const createAnimatedStyle = animation
-    || animations[`${animationName}${ANIMATION_SUFFIX}`]
-    || style[`${animationName}${ANIMATION_SUFFIX}`];
+  const createAnimatedStyle =
+    animation ||
+    animations[`${animationName}${ANIMATION_SUFFIX}`] ||
+    style[`${animationName}${ANIMATION_SUFFIX}`];
 
   if (!_.isFunction(createAnimatedStyle)) {
-    throw new Error(`Animation with name: ${animationName}, you tried to assign to `
-      + `to the ${componentName} doesn't exist. Check ${componentName}'s style or its declaration, `
-      + 'to find an exact error');
+    throw new Error(
+      `Animation with name: ${animationName}, you tried to assign to ` +
+        `to the ${componentName} doesn't exist. Check ${componentName}'s style or its declaration, ` +
+        'to find an exact error',
+    );
   }
 
   if (!driver) {
-    throw new Error(`You tried to animate ${componentName} with animation named ${animationName} `
-      + `but you didn't pass driver to ${componentName}.`);
+    throw new Error(
+      `You tried to animate ${componentName} with animation named ${animationName} ` +
+        `but you didn't pass driver to ${componentName}.`,
+    );
   }
 
-  const animatedStyle = createAnimatedStyle(driver, { layout, animationOptions });
+  const animatedStyle = createAnimatedStyle(driver, {
+    layout,
+    animationOptions,
+  });
 
-  return _.mergeWith(removeAnimationsFromStyle(style), animatedStyle, transferAnimatedValues);
+  return _.mergeWith(
+    removeAnimationsFromStyle(style),
+    animatedStyle,
+    transferAnimatedValues,
+  );
 }
 
 const defaultOptions = {
@@ -167,7 +179,7 @@ export default function connectAnimation(
     constructor(props, context) {
       super(props, context);
 
-      autoBind(this);
+      autoBindReact(this);
 
       this.state = {
         layout: {
@@ -198,7 +210,9 @@ export default function connectAnimation(
       const driver = this.getDriver();
 
       if (!_.isEqual(eventLayout, stateLayout)) {
-        this.setState({ layout: eventLayout }, () => this.resolveStyle(this.props, driver));
+        this.setState({ layout: eventLayout }, () =>
+          this.resolveStyle(this.props, driver),
+        );
       }
     }
 
@@ -233,10 +247,12 @@ export default function connectAnimation(
     shouldRebuildStyle(prevProps) {
       const { animation, animationName, style } = this.props;
 
-      return prevProps.style !== style
-        || prevProps.animation !== animation
-        || prevProps.animationName !== animationName
-        || this.getDriver(prevProps) !== this.getDriver(this.props);
+      return (
+        prevProps.style !== style ||
+        prevProps.animation !== animation ||
+        prevProps.animationName !== animationName ||
+        this.getDriver(prevProps) !== this.getDriver(this.props)
+      );
     }
 
     /**

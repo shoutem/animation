@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
+import autoBindReact from 'auto-bind/react';
 import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
-import autoBind from 'auto-bind/react';
-
 import measure from '../components/measure';
 import { DriverShape } from '../drivers/DriverShape';
 /*
@@ -63,7 +62,7 @@ class Parallax extends PureComponent {
     header: PropTypes.bool,
 
     style: PropTypes.object,
-  }
+  };
 
   static defaultProps = {
     extrapolation: undefined,
@@ -71,18 +70,22 @@ class Parallax extends PureComponent {
     insideScroll: true,
     scrollSpeed: 2,
     style: {},
-  }
+  };
 
   constructor(props) {
     super(props);
 
-    autoBind(this);
+    autoBindReact(this);
 
     this.translation = new Animated.Value(0);
   }
 
   componentDidMount() {
-    const { driver: { value: { addListener } } } = this.props;
+    const {
+      driver: {
+        value: { addListener },
+      },
+    } = this.props;
     this.animationListener = addListener(this.calculateTranslation);
   }
 
@@ -92,8 +95,14 @@ class Parallax extends PureComponent {
   }
 
   calculateTranslation(scrollOffset) {
-    const { driver: { layout: { height: scrollHeight } } } = this.props;
-    const { layout: { pageY } } = this.state;
+    const {
+      driver: {
+        layout: { height: scrollHeight },
+      },
+    } = this.props;
+    const {
+      layout: { pageY },
+    } = this.state;
     this.translation.setValue(scrollOffset.value - (pageY - scrollHeight / 2));
   }
 
@@ -113,17 +122,20 @@ class Parallax extends PureComponent {
 
     return (
       <Animated.View
-        style={[style, {
-          transform: [
-            {
-              translateY: animatedValue.interpolate({
-                inputRange: [-100, 100],
-                outputRange: [-scrollFactor * 100, scrollFactor * 100],
-                ...extrapolation,
-              }),
-            },
-          ],
-        }]}
+        style={[
+          style,
+          {
+            transform: [
+              {
+                translateY: animatedValue.interpolate({
+                  inputRange: [-100, 100],
+                  outputRange: [-scrollFactor * 100, scrollFactor * 100],
+                  ...extrapolation,
+                }),
+              },
+            ],
+          },
+        ]}
       >
         {children}
       </Animated.View>

@@ -1,24 +1,16 @@
 import React, { Component } from 'react';
+import autoBindReact from 'auto-bind/react';
 import { ScrollView } from 'react-native';
-import autoBind from 'auto-bind/react';
-
 import { Parallax, ScrollDriver } from '@shoutem/animation';
-import {
-  ImageBackground,
-  Tile,
-  Title,
-  Subtitle,
-} from '@shoutem/ui';
+import { ImageBackground, Subtitle, Tile, Title } from '@shoutem/ui';
 
-function getRestaurants() {
-  return require('./restaurants.json');
-}
+const restaurants = require('./restaurants.json');
 
 export default class ParallaxExample extends Component {
   constructor(props) {
     super(props);
 
-    autoBind(this);
+    autoBindReact(this);
 
     this.driver = new ScrollDriver();
   }
@@ -43,7 +35,7 @@ export default class ParallaxExample extends Component {
   render() {
     return (
       <ScrollView {...this.driver.scrollViewProps}>
-        {getRestaurants().map(this.renderRow)}
+        {restaurants.map(this.renderRow)}
       </ScrollView>
     );
   }

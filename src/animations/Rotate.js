@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
-import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
+import { View } from './View';
+
 /*
  * Rotate Component adds rotation effect to its children components.
  * Connect it to driver and pass the input range to animate it.
@@ -58,17 +58,10 @@ export default class Rotate extends PureComponent {
     axis: 'z',
     inputRange: [0, 1],
     style: {},
-  }
+  };
 
   render() {
-    const {
-      driver,
-      children,
-      inputRange,
-      angle,
-      axis,
-      style,
-    } = this.props;
+    const { driver, children, inputRange, angle, axis, style } = this.props;
 
     return (
       <View

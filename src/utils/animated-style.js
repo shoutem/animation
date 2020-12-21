@@ -6,7 +6,8 @@ import { Animated } from 'react-native';
  * @param value The value to check.
  * @returns {boolean} `true` if a value is animated, `false` otherwise.
  */
-export const isAnimatedStyleValue = value => value && typeof value.interpolate === 'function';
+export const isAnimatedStyleValue = value =>
+  value && typeof value.interpolate === 'function';
 
 /**
  * Gets the current value of an animated style value. If
@@ -15,7 +16,7 @@ export const isAnimatedStyleValue = value => value && typeof value.interpolate =
  * @param value The style value.
  * @return {*} The current value of a provided animated value.
  */
-export const getAnimatedStyleValue = (value) => {
+export const getAnimatedStyleValue = value => {
   if (isAnimatedStyleValue(value)) {
     // If this is an animated value, we want to convert it to
     // a plain object in order to get its current value.
@@ -34,7 +35,7 @@ export const getAnimatedStyleValue = (value) => {
  * @param animatedStyleValue The starting animated style value.
  * @returns {*} The closest `AnimatedValue`.
  */
-const findAnimatedValue = (animatedStyleValue) => {
+const findAnimatedValue = animatedStyleValue => {
   if (animatedStyleValue instanceof Animated.Value) {
     return animatedStyleValue;
   }

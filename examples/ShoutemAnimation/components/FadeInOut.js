@@ -1,12 +1,6 @@
 import React from 'react';
-
 import { FadeOut, FadeIn, TimingDriver } from '@shoutem/animation';
-import {
-  Title,
-  Caption,
-  Tile,
-  View,
-} from '@shoutem/ui';
+import { Caption, Title, Tile, View } from '@shoutem/ui';
 
 // import/prefer-default-export const cannot be default export
 // eslint-disable-next-line

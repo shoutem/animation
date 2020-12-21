@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
 import measure from '../../components/measure';
 import { DriverShape } from '../../drivers/DriverShape';
 import { View } from '../View';
@@ -35,7 +34,7 @@ class Slide extends PureComponent {
     direction: 'top right',
     inputRange: [0, 1],
     style: {},
-  }
+  };
 
   render() {
     const {
@@ -48,7 +47,8 @@ class Slide extends PureComponent {
     } = this.props;
     const { layout } = this.state;
 
-    const offset = direction.split(' ').reduce((null, position) => {
+    // 'type' is unused as we only need 'position'.
+    const offset = direction.split(' ').reduce((type, position) => {
       const resolvedOffset = {};
       if (position.toLowerCase() === 'top') {
         resolvedOffset.y = -(layout.pageY + layout.height);

@@ -1,6 +1,5 @@
 import { Animated } from 'react-native';
-import autoBind from 'auto-bind/react';
-
+import autoBindReact from 'auto-bind/react';
 import DriverBase from './DriverBase';
 
 /**
@@ -25,7 +24,7 @@ export default class SpringDriver extends DriverBase {
   constructor(options) {
     super();
 
-    autoBind(this);
+    autoBindReact(this);
 
     this.animationOptions = {
       friction: 7,
@@ -35,6 +34,9 @@ export default class SpringDriver extends DriverBase {
   }
 
   toValue(endValue, onFinish) {
-    Animated.spring(this.value, { toValue: endValue, ...this.animationOptions }).start(onFinish);
+    Animated.spring(this.value, {
+      toValue: endValue,
+      ...this.animationOptions,
+    }).start(onFinish);
   }
 }

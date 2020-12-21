@@ -1,6 +1,5 @@
 import { Animated, Easing } from 'react-native';
-import autoBind from 'auto-bind/react';
-
+import autoBindReact from 'auto-bind/react';
 import DriverBase from './DriverBase';
 
 /**
@@ -34,7 +33,7 @@ export default class TouchableDriver extends DriverBase {
   constructor(options) {
     super();
 
-    autoBind(this);
+    autoBindReact(this);
 
     this.animationOptions = {
       easing: Easing.elastic(1),

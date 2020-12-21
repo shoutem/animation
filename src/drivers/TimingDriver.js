@@ -1,6 +1,5 @@
 import { Animated, Easing } from 'react-native';
-import autoBind from 'auto-bind/react';
-
+import autoBindReact from 'auto-bind/react';
 import DriverBase from './DriverBase';
 
 /**
@@ -26,7 +25,7 @@ export default class TimingDriver extends DriverBase {
   constructor(options) {
     super();
 
-    autoBind(this);
+    autoBindReact(this);
 
     this.animationOptions = {
       easing: Easing.cubic,
@@ -36,10 +35,14 @@ export default class TimingDriver extends DriverBase {
   }
 
   toValue(endValue, onFinish) {
-    Animated.timing(this.value, { toValue: endValue, ...this.animationOptions }).start(onFinish);
+    Animated.timing(this.value, {
+      toValue: endValue,
+      ...this.animationOptions,
+    }).start(onFinish);
   }
 
   runTimer(endValue, onFinish) {
+    // eslint-disable-next-line no-console
     console.warn('runTimer will be deprecated soon, use toValue instead.');
     this.toValue(endValue, onFinish);
   }

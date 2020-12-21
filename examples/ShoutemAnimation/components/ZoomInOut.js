@@ -1,12 +1,6 @@
 import React from 'react';
-
-import { ZoomOut, ZoomIn, TimingDriver } from '@shoutem/animation';
-import {
-  Title,
-  Caption,
-  Tile,
-  View,
-} from '@shoutem/ui';
+import { TimingDriver, ZoomIn, ZoomOut } from '@shoutem/animation';
+import { Caption, Tile, Title, View } from '@shoutem/ui';
 
 // import/prefer-default-export const cannot be default export
 // eslint-disable-next-line

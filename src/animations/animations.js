@@ -10,7 +10,8 @@ export const animations = {
             outputRange: [3, 1],
             extrapolateRight: 'clamp',
           }),
-        }, {
+        },
+        {
           translateY: driver.value.interpolate({
             inputRange: [-100, 100],
             outputRange: [-50, 50],
@@ -111,7 +112,8 @@ export const animations = {
             outputRange: [0, y],
             extrapolate: 'clamp',
           }),
-        }, {
+        },
+        {
           translateX: driver.value.interpolate({
             inputRange,
             outputRange: [0, x],

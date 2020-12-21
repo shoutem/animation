@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
-import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
+import { View } from './View';
+
 /*
  * ZoomOut Component adds zoom out effect to its children components.
  * Connect it to driver and pass the input range to animate it.
@@ -49,22 +49,16 @@ export default class ZoomOut extends PureComponent {
      */
     maxFactor: PropTypes.number,
     style: PropTypes.object,
-  }
+  };
 
   static defaultProps = {
     inputRange: [0, 1],
     maxFactor: 1.5,
     style: {},
-  }
+  };
 
   render() {
-    const {
-      driver,
-      children,
-      inputRange,
-      maxFactor,
-      style,
-    } = this.props;
+    const { driver, children, inputRange, maxFactor, style } = this.props;
 
     return (
       <View

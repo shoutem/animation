@@ -54,16 +54,10 @@ export default class SlideIn extends PureComponent {
     from: 'top right',
     inputRange: [0, 1],
     style: {},
-  }
+  };
 
   render() {
-    const {
-      driver,
-      children,
-      inputRange,
-      style,
-      from,
-    } = this.props;
+    const { driver, children, inputRange, style, from } = this.props;
 
     return (
       <Slide

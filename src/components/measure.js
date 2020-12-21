@@ -1,12 +1,12 @@
 import { UIManager, findNodeHandle } from 'react-native';
-import autoBind from 'auto-bind/react';
+import autoBindReact from 'auto-bind/react';
 
 export default function measure(Component) {
   class measuredComponent extends Component {
     constructor(props, context) {
       super(props, context);
 
-      autoBind(this);
+      autoBindReact(this);
 
       this.state = {
         ...super.state,

@@ -1,7 +1,6 @@
 import { Animated } from 'react-native';
-import autoBind from 'auto-bind/react';
+import autoBindReact from 'auto-bind/react';
 import _ from 'lodash';
-
 import DriverBase from './DriverBase';
 
 /**
@@ -29,17 +28,22 @@ import DriverBase from './DriverBase';
  *   Used only if `useNativeDriver` is `true`, defaults to 20ms.
  */
 export default class ScrollDriver extends DriverBase {
-  constructor(options = { useNativeDriver: false, nativeScrollEventThrottle: 20 }) {
+  constructor(
+    options = { useNativeDriver: false, nativeScrollEventThrottle: 20 },
+  ) {
     super();
 
-    autoBind(this);
+    autoBindReact(this);
 
     if (options.useNativeDriver) {
       this.nativeValue = new Animated.Value(0);
 
-      this.nativeValue.addListener(_.debounce(({ value }) => {
-        this.value.setValue(value);
-      }), options.nativeScrollEventThrottle);
+      this.nativeValue.addListener(
+        _.debounce(({ value }) => {
+          this.value.setValue(value);
+        }),
+        options.nativeScrollEventThrottle,
+      );
     }
 
     this.primaryValue = this.nativeValue || this.value;

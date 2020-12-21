@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
-import { Slide } from './Slide';
 import { DriverShape } from '../../drivers/DriverShape';
+import { Slide } from './Slide';
 
 /*
  * SlideOut Component adds slide out effect to its children components.
@@ -55,16 +54,10 @@ export default class SlideOut extends PureComponent {
     inputRange: [0, 1],
     to: 'top left',
     style: {},
-  }
+  };
 
   render() {
-    const {
-      driver,
-      children,
-      inputRange,
-      style,
-      to,
-    } = this.props;
+    const { driver, children, inputRange, style, to } = this.props;
 
     return (
       <Slide

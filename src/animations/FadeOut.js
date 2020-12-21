@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
 import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
 /*
@@ -44,20 +43,15 @@ export default class FadeOut extends PureComponent {
      */
     inputRange: PropTypes.array,
     style: PropTypes.object,
-  }
+  };
 
   static defaultProps = {
     inputRange: [0, 1],
     style: {},
-  }
+  };
 
   render() {
-    const {
-      children,
-      driver,
-      inputRange,
-      style,
-    } = this.props;
+    const { children, driver, inputRange, style } = this.props;
 
     return (
       <View

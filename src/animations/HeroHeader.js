@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
 import { View } from './View';
 import { DriverShape } from '../drivers/DriverShape';
 /*
@@ -35,7 +34,7 @@ export default class HeroHeader extends PureComponent {
      * Components to which an effect will be applied
      */
     children: PropTypes.node.isRequired,
-  }
+  };
 
   render() {
     const { driver, children } = this.props;
