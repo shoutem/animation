@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import autoBindReact from 'auto-bind/react';
-import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
+import { Animated } from 'react-native';
 import measure from '../components/measure';
-import { DriverShape } from '../drivers/DriverShape';
+import DriverShape from '../drivers/DriverShape';
+
 /*
  * Parallax Component adds parallax effect to its children components.
  * Connect it to driver to animate it. By default children will by
@@ -65,7 +66,6 @@ class Parallax extends PureComponent {
   };
 
   static defaultProps = {
-    extrapolation: undefined,
     header: false,
     insideScroll: true,
     scrollSpeed: 2,
@@ -143,8 +143,6 @@ class Parallax extends PureComponent {
   }
 }
 
-const measuredParralax = measure(Parallax);
+const measuredParallax = measure(Parallax);
 
-// import/prefer-default-export const cannot be default export
-// eslint-disable-next-line
-export { measuredParralax as Parallax };
+export default measuredParallax;

@@ -1,6 +1,4 @@
-// import/prefer-default-export const cannot be default export
-// eslint-disable-next-line
-export const animations = {
+export default {
   heroAnimation(driver, { layout }) {
     return {
       transform: [

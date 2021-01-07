@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Slide } from './Slide';
-import { DriverShape } from '../../drivers/DriverShape';
+import DriverShape from '../../drivers/DriverShape';
+import Slide from './Slide';
 
 /*
  * SlideIn Component adds slide in effect to its children components.

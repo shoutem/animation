@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { View } from './View';
-import { DriverShape } from '../drivers/DriverShape';
+import View from './View';
+import DriverShape from '../drivers/DriverShape';
+
 /*
  * FadeOut Component adds fade out effect to its children components.
  * Connect it to driver and pass the input range to animate it.

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import autoBindReact from 'auto-bind/react';
 import { ScrollView } from 'react-native';
 import { Parallax, ScrollDriver } from '@shoutem/animation';
@@ -6,7 +6,7 @@ import { ImageBackground, Subtitle, Tile, Title } from '@shoutem/ui';
 
 const restaurants = require('./restaurants.json');
 
-export default class ParallaxExample extends Component {
+export default class ParallaxExample extends PureComponent {
   constructor(props) {
     super(props);
 

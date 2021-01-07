@@ -2,9 +2,7 @@ import React from 'react';
 import { SlideIn, SlideOut, TimingDriver } from '@shoutem/animation';
 import { Caption, Tile, Title, View } from '@shoutem/ui';
 
-// import/prefer-default-export const cannot be default export
-// eslint-disable-next-line
-export const SlideInOutExample = () => {
+export default function SlideInOutExample() {
   const driver = new TimingDriver({ duration: 6000 });
   driver.runTimer(14);
 
@@ -72,4 +70,4 @@ export const SlideInOutExample = () => {
       </SlideOut>
     </View>
   );
-};
+}

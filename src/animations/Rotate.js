@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { DriverShape } from '../drivers/DriverShape';
-import { View } from './View';
+import DriverShape from '../drivers/DriverShape';
+import View from './View';
 
 /*
  * Rotate Component adds rotation effect to its children components.

@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { View } from './View';
-import { DriverShape } from '../drivers/DriverShape';
+import View from './View';
+import DriverShape from '../drivers/DriverShape';
+
 /*
  * HeroHeader adds complex effect to its children components.
  * Connect it to driver to animate it.

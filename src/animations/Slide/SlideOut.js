@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { DriverShape } from '../../drivers/DriverShape';
-import { Slide } from './Slide';
+import DriverShape from '../../drivers/DriverShape';
+import Slide from './Slide';
 
 /*
  * SlideOut Component adds slide out effect to its children components.

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { DropDownMenu, Screen, Divider } from '@shoutem/ui';
+import FadeInOut from './FadeInOut';
+import HeroHeader from './HeroHeader';
 import Parallax from './Parallax';
-import { HeroHeaderExample as HeroHeader } from './HeroHeader';
-import { FadeInOutExample as FadeInOut } from './FadeInOut';
-import { ZoomInOutExample as ZoomInOut } from './ZoomInOut';
-import { ZoomInTouchableExample as ZoomInTouchable } from './ZoomInTouchable';
-import { RotateExample as Rotate } from './Rotate';
-import { SlideInOutExample as SlideInOut } from './SlideInOut';
+import Rotate from './Rotate';
+import SlideInOut from './SlideInOut';
+import ZoomInOut from './ZoomInOut';
+import ZoomInTouchable from './ZoomInTouchable';
 
 const examples = {
   Parallax,
@@ -76,7 +76,6 @@ export default class AnimationExamples extends Component {
           titleProperty="example"
           valueProperty="component"
         />
-
         <SelectedComponent />
       </Screen>
     );

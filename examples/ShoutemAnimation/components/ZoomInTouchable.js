@@ -2,9 +2,7 @@ import React from 'react';
 import { TouchableDriver, ZoomIn } from '@shoutem/animation';
 import { Button, Icon, Row, Text, View } from '@shoutem/ui';
 
-// import/prefer-default-export const cannot be default export
-// eslint-disable-next-line
-export const ZoomInTouchableExample = () =>  {
+export default function ZoomInTouchableExample() {
   const driver = new TouchableDriver();
 
   return (
@@ -21,4 +19,4 @@ export const ZoomInTouchableExample = () =>  {
       </Row>
     </View>
   );
-};
+}

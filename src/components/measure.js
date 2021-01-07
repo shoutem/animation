@@ -23,6 +23,13 @@ export default function measure(Component) {
       };
     }
 
+    componentDidMount() {
+      requestAnimationFrame(this.measure);
+      if (typeof super.componentDidMount === 'function') {
+        super.componentDidMount();
+      }
+    }
+
     handleMeasure(x, y, width, height, pageX, pageY) {
       // react/no-unused-state used in components created via 'measure'
       // eslint-disable-next-line
@@ -41,15 +48,6 @@ export default function measure(Component) {
     measure() {
       UIManager.measure(findNodeHandle(this), this.handleMeasure);
     }
-
-    // commenting this out as it seems unused elsewhere in the package and requestAnimationFrame
-    // is not defined
-    // componentDidMount() {
-    //   requestAnimationFrame(this.measure);
-    //   if (typeof super.componentDidMount === 'function') {
-    //     super.componentDidMount();
-    //   }
-    // }
   }
 
   return measuredComponent;

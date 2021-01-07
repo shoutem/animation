@@ -2,9 +2,7 @@ import React from 'react';
 import { TimingDriver, ZoomIn, ZoomOut } from '@shoutem/animation';
 import { Caption, Tile, Title, View } from '@shoutem/ui';
 
-// import/prefer-default-export const cannot be default export
-// eslint-disable-next-line
-export const ZoomInOutExample = () => {
+export default function ZoomInOutExample() {
   const driver = new TimingDriver({ duration: 3000 });
   driver.runTimer(1);
 
@@ -28,4 +26,4 @@ export const ZoomInOutExample = () => {
       </ZoomIn>
     </View>
   );
-};
+}

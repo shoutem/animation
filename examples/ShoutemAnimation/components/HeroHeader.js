@@ -18,9 +18,7 @@ import {
 
 const firstRestaurant = require('./restaurants.json')[0];
 
-// import/prefer-default-export const cannot be default export
-// eslint-disable-next-line
-export const HeroHeaderExample = () => {
+export default function HeroHeaderExample() {
   const driver = new ScrollDriver();
 
   return (
@@ -55,4 +53,4 @@ export const HeroHeaderExample = () => {
       </View>
     </ScrollView>
   );
-};
+}

@@ -1,8 +1,25 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import measure from '../../components/measure';
-import { DriverShape } from '../../drivers/DriverShape';
-import { View } from '../View';
+import DriverShape from '../../drivers/DriverShape';
+import View from '../View';
+
+function getOffsetFromDirection(direction, layout) {
+  // 'type' is unused as we only need 'position'.
+  return direction.split(' ').reduce((type, position) => {
+    const resolvedOffset = {};
+    if (position.toLowerCase() === 'top') {
+      resolvedOffset.y = -(layout.pageY + layout.height);
+    } else if (position.toLowerCase() === 'left') {
+      resolvedOffset.x = -(layout.pageX + layout.width);
+    } else if (position.toLowerCase() === 'bottom') {
+      resolvedOffset.y = layout.pageY + layout.height;
+    } else if (position.toLowerCase() === 'right') {
+      resolvedOffset.x = layout.pageX + layout.width;
+    }
+    return resolvedOffset;
+  }, {});
+}
 
 class Slide extends PureComponent {
   static propTypes = {
@@ -47,20 +64,7 @@ class Slide extends PureComponent {
     } = this.props;
     const { layout } = this.state;
 
-    // 'type' is unused as we only need 'position'.
-    const offset = direction.split(' ').reduce((type, position) => {
-      const resolvedOffset = {};
-      if (position.toLowerCase() === 'top') {
-        resolvedOffset.y = -(layout.pageY + layout.height);
-      } else if (position.toLowerCase() === 'left') {
-        resolvedOffset.x = -(layout.pageX + layout.width);
-      } else if (position.toLowerCase() === 'bottom') {
-        resolvedOffset.y = layout.pageY + layout.height;
-      } else if (position.toLowerCase() === 'right') {
-        resolvedOffset.x = layout.pageX + layout.width;
-      }
-      return resolvedOffset;
-    }, {});
+    const offset = getOffsetFromDirection(direction, layout);
 
     return (
       <View
@@ -77,6 +81,4 @@ class Slide extends PureComponent {
 
 const measuredSlide = measure(Slide);
 
-// import/prefer-default-export const cannot be default export
-// eslint-disable-next-line
-export { measuredSlide as Slide };
+export default measuredSlide;
