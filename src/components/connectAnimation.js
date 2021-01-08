@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { Animated } from 'react-native';
+import autoBindReact from 'auto-bind/react';
 import hoistStatics from 'hoist-non-react-statics';
 import _ from 'lodash';
-
-import { DriverShape } from '../drivers/DriverShape';
+import PropTypes from 'prop-types';
+import { Animated } from 'react-native';
+import DriverShape from '../drivers/DriverShape';
 
 const ANIMATION_SUFFIX = 'Animation';
 
@@ -13,7 +13,10 @@ function isComponentAnimated(props) {
 }
 
 function removeAnimationsFromStyle(style) {
-  return _.omitBy(style, (value, key) => _.isFunction(value) && _.endsWith(key, ANIMATION_SUFFIX));
+  return _.omitBy(
+    style,
+    (value, key) => _.isFunction(value) && _.endsWith(key, ANIMATION_SUFFIX),
+  );
 }
 
 /**
@@ -22,7 +25,10 @@ function removeAnimationsFromStyle(style) {
  * which contains styles created by animated interpolations
  */
 function transferAnimatedValues(styleValue, animatedStyleValue) {
-  if (_.isFunction(animatedStyleValue.interpolate) || _.isUndefined(styleValue)) {
+  if (
+    _.isFunction(animatedStyleValue.interpolate) ||
+    _.isUndefined(styleValue)
+  ) {
     return animatedStyleValue;
   }
 
@@ -36,12 +42,7 @@ function resolveAnimatedStyle({
   layout = {},
   componentName = 'component',
 }) {
-  const {
-    style,
-    animation,
-    animationName,
-    animationOptions,
-  } = props;
+  const { style, animation, animationName, animationOptions } = props;
 
   if (!isComponentAnimated(props)) {
     return removeAnimationsFromStyle(style);
@@ -53,19 +54,30 @@ function resolveAnimatedStyle({
     style[`${animationName}${ANIMATION_SUFFIX}`];
 
   if (!_.isFunction(createAnimatedStyle)) {
-    throw new Error(`Animation with name: ${animationName}, you tried to assign to ` +
-      `to the ${componentName} doesn't exist. Check ${componentName}'s style or its declaration, ` +
-      'to find an exact error');
+    throw new Error(
+      `Animation with name: ${animationName}, you tried to assign to ` +
+        `to the ${componentName} doesn't exist. Check ${componentName}'s style or its declaration, ` +
+        'to find an exact error',
+    );
   }
 
   if (!driver) {
-    throw new Error(`You tried to animate ${componentName} with animation named ${animationName} ` +
-      `but you didn't pass driver to ${componentName}.`);
+    throw new Error(
+      `You tried to animate ${componentName} with animation named ${animationName} ` +
+        `but you didn't pass driver to ${componentName}.`,
+    );
   }
 
-  const animatedStyle = createAnimatedStyle(driver, { layout, animationOptions });
+  const animatedStyle = createAnimatedStyle(driver, {
+    layout,
+    animationOptions,
+  });
 
-  return _.mergeWith(removeAnimationsFromStyle(style), animatedStyle, transferAnimatedValues);
+  return _.mergeWith(
+    removeAnimationsFromStyle(style),
+    animatedStyle,
+    transferAnimatedValues,
+  );
 }
 
 const defaultOptions = {
@@ -98,23 +110,27 @@ const defaultOptions = {
  *   will be wrapped in an animated component, true by default. You may set this
  *   to false if your component already knows how to work with animated style values.
  */
-export function connectAnimation(WrappedComponent, animations = {}, options = defaultOptions) {
+export default function connectAnimation(
+  WrappedComponent,
+  animations = {},
+  options = defaultOptions,
+) {
   function getComponentDisplayName() {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
   }
 
   const componentDisplayName = getComponentDisplayName();
 
-  const AnimatedWrappedComponent = options.createAnimatedComponent ?
-    Animated.createAnimatedComponent(WrappedComponent) :
-    WrappedComponent;
+  const AnimatedWrappedComponent = options.createAnimatedComponent
+    ? Animated.createAnimatedComponent(WrappedComponent)
+    : WrappedComponent;
 
   class AnimatedComponent extends PureComponent {
     static propTypes = {
       /**
        * Animation Driver an instance of driver that will be used to create animated style
        */
-      driver: DriverShape,
+      driver: DriverShape.isRequired,
       /**
        * Component style (could contain animation functions)
        */
@@ -143,7 +159,10 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
     };
 
     static defaultProps = {
+      animation: undefined,
+      animationName: undefined,
       animationOptions: {},
+      style: {},
     };
 
     static contextTypes = {
@@ -160,10 +179,7 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
     constructor(props, context) {
       super(props, context);
 
-      this.onLayout = this.onLayout.bind(this);
-      this.resolveStyle = this.resolveStyle.bind(this);
-      this.setWrappedInstance = this.setWrappedInstance.bind(this);
-      this.transformProps = this.transformProps.bind(this);
+      autoBindReact(this);
 
       this.state = {
         layout: {
@@ -176,48 +192,32 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
       };
     }
 
-    componentDidUpdate(prevProps) {
-      if (this.shouldRebuildStyle(prevProps)) {
-        this.resolveStyle(this.props, this.getDriver());
-      }
-    }
-
     getChildContext() {
       return {
         transformProps: this.transformProps,
       };
     }
 
-    shouldRebuildStyle(prevProps) {
-      return prevProps.style !== this.props.style ||
-        prevProps.animation !== this.props.animation ||
-        prevProps.animationName !== this.props.animationName ||
-        this.getDriver(prevProps) !== this.getDriver(this.props);
+    componentDidUpdate(prevProps) {
+      if (this.shouldRebuildStyle(prevProps)) {
+        this.resolveStyle(this.props, this.getDriver());
+      }
     }
 
     onLayout(event) {
-      const { layout } = event.nativeEvent;
+      const { layout: stateLayout } = this.state;
+      const { layout: eventLayout } = event.nativeEvent;
       const driver = this.getDriver();
 
-      if (!_.isEqual(layout, this.state.layout)) {
-        this.setState({ layout }, () => this.resolveStyle(this.props, driver));
+      if (!_.isEqual(eventLayout, stateLayout)) {
+        this.setState({ layout: eventLayout }, () =>
+          this.resolveStyle(this.props, driver),
+        );
       }
     }
 
     getDriver(props = this.props, context = this.context) {
       return props.driver || context.animationDriver;
-    }
-
-    resolveStyle(props, driver) {
-      this.setState({
-        resolvedStyle: resolveAnimatedStyle({
-          props,
-          driver,
-          animations,
-          layout: this.state.layout,
-          componentName: WrappedComponent.displayName || WrappedComponent.name,
-        }),
-      });
     }
 
     setNativeProps(nativeProps) {
@@ -230,6 +230,31 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
       this.wrappedInstance = component;
     }
 
+    resolveStyle(props, driver) {
+      const { layout } = this.state;
+
+      this.setState({
+        resolvedStyle: resolveAnimatedStyle({
+          props,
+          driver,
+          animations,
+          layout,
+          componentName: WrappedComponent.displayName || WrappedComponent.name,
+        }),
+      });
+    }
+
+    shouldRebuildStyle(prevProps) {
+      const { animation, animationName, style } = this.props;
+
+      return (
+        prevProps.style !== style ||
+        prevProps.animation !== animation ||
+        prevProps.animationName !== animationName ||
+        this.getDriver(prevProps) !== this.getDriver(this.props)
+      );
+    }
+
     /**
      * A helper function provided to child components that enables
      * them to get the prop transformations that this component performs.
@@ -238,6 +263,7 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
      * @returns {*} The transformed props.
      */
     transformProps(props) {
+      const { layout } = this.state;
       const { transformProps } = this.context;
 
       const sourceProps = transformProps ? transformProps(props) : props;
@@ -248,7 +274,7 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
           props: sourceProps,
           driver: this.getDriver(sourceProps, this.context),
           animations,
-          layout: this.state.layout,
+          layout,
           componentName: WrappedComponent.displayName || WrappedComponent.name,
         }),
       };
@@ -256,9 +282,10 @@ export function connectAnimation(WrappedComponent, animations = {}, options = de
 
     render() {
       const { resolvedStyle } = this.state;
-      const ConnectedComponent = isComponentAnimated(this.props) ?
-        AnimatedWrappedComponent :
-        WrappedComponent;
+
+      const ConnectedComponent = isComponentAnimated(this.props)
+        ? AnimatedWrappedComponent
+        : WrappedComponent;
 
       return (
         <ConnectedComponent

@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
+import autoBindReact from 'auto-bind/react';
 import PropTypes from 'prop-types';
-import ReactNative, { Animated, View, Dimensions } from 'react-native';
+import { Animated } from 'react-native';
+import measure from '../components/measure';
+import DriverShape from '../drivers/DriverShape';
 
-import { DriverShape } from '../drivers/DriverShape';
-import { measure } from '../components/measure';
 /*
  * Parallax Component adds parallax effect to its children components.
  * Connect it to driver to animate it. By default children will by
@@ -40,7 +41,7 @@ class Parallax extends PureComponent {
     /**
      * Components to which an effect will be applied
      */
-    children: PropTypes.node,
+    children: PropTypes.node.isRequired,
     /**
      * extrapolation options for parallax translation
      * if not passed children would be translated by
@@ -62,33 +63,47 @@ class Parallax extends PureComponent {
     header: PropTypes.bool,
 
     style: PropTypes.object,
-  }
+  };
 
   static defaultProps = {
-    insideScroll: true,
     header: false,
-  }
+    insideScroll: true,
+    scrollSpeed: 2,
+    style: {},
+  };
 
   constructor(props) {
     super(props);
-    this.translation = new Animated.Value(0);
-    this.calculateTranslation = this.calculateTranslation.bind(this);
-  }
 
-  calculateTranslation(scrollOffset) {
-    const { layout: { pageY } } = this.state;
-    const { driver: { layout: { height: scrollHeight } } } = this.props;
-    this.translation.setValue(scrollOffset.value - (pageY - scrollHeight / 2));
+    autoBindReact(this);
+
+    this.translation = new Animated.Value(0);
   }
 
   componentDidMount() {
-    const { driver: { value: { addlistener } } } = this.props;
+    const {
+      driver: {
+        value: { addListener },
+      },
+    } = this.props;
     this.animationListener = addListener(this.calculateTranslation);
   }
 
   componentWillUnmount() {
     const { driver } = this.props;
     driver.value.removeListener(this.animationListener);
+  }
+
+  calculateTranslation(scrollOffset) {
+    const {
+      driver: {
+        layout: { height: scrollHeight },
+      },
+    } = this.props;
+    const {
+      layout: { pageY },
+    } = this.state;
+    this.translation.setValue(scrollOffset.value - (pageY - scrollHeight / 2));
   }
 
   render() {
@@ -107,17 +122,20 @@ class Parallax extends PureComponent {
 
     return (
       <Animated.View
-        style={[style, {
-          transform: [
-            {
-              translateY: animatedValue.interpolate({
-                inputRange: [-100, 100],
-                outputRange: [-scrollFactor * 100, scrollFactor * 100],
-                ...extrapolation,
-              }),
-            },
-          ],
-        }]}
+        style={[
+          style,
+          {
+            transform: [
+              {
+                translateY: animatedValue.interpolate({
+                  inputRange: [-100, 100],
+                  outputRange: [-scrollFactor * 100, scrollFactor * 100],
+                  ...extrapolation,
+                }),
+              },
+            ],
+          },
+        ]}
       >
         {children}
       </Animated.View>
@@ -125,8 +143,6 @@ class Parallax extends PureComponent {
   }
 }
 
-const measuredParralax = measure(Parallax);
+const measuredParallax = measure(Parallax);
 
-export {
-  measuredParralax as Parallax
-};
+export default measuredParallax;

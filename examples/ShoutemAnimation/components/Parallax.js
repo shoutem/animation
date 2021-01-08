@@ -1,28 +1,18 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import autoBindReact from 'auto-bind/react';
 import { ScrollView } from 'react-native';
+import { Parallax, ScrollDriver } from '@shoutem/animation';
+import { ImageBackground, Subtitle, Tile, Title } from '@shoutem/ui';
 
-import {
-  Parallax,
-  ScrollDriver,
-} from '@shoutem/animation';
+const restaurants = require('./restaurants.json');
 
-import {
-  ImageBackground,
-  Tile,
-  Title,
-  Subtitle,
-} from '@shoutem/ui';
-
-export default class ParallaxExample extends Component {
+export default class ParallaxExample extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.renderRow = this.renderRow.bind(this);
-    this.driver = new ScrollDriver();
-  }
+    autoBindReact(this);
 
-  getRestaurants() {
-    return require('./restaurants.json');
+    this.driver = new ScrollDriver();
   }
 
   renderRow(restaurant) {
@@ -45,7 +35,7 @@ export default class ParallaxExample extends Component {
   render() {
     return (
       <ScrollView {...this.driver.scrollViewProps}>
-        {this.getRestaurants().map(this.renderRow)}
+        {restaurants.map(this.renderRow)}
       </ScrollView>
     );
   }

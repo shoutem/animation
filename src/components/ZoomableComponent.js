@@ -1,18 +1,13 @@
 import React, { PureComponent } from 'react';
-
+import autoBindReact from 'auto-bind/react';
 import PropTypes from 'prop-types';
-
-import {
-  View,
-  PanResponder,
-  LayoutAnimation,
-} from 'react-native';
+import { View, PanResponder, LayoutAnimation } from 'react-native';
 
 function getDistanceBetweenTwoPoints({ x: x1, y: y1 }, { x: x2, y: y2 }) {
   const dx = Math.abs(x1 - x2);
   const dy = Math.abs(y1 - y2);
 
-  return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+  return Math.sqrt(dx ** 2 + dy ** 2);
 }
 
 function middle1D(p1, p2) {
@@ -35,7 +30,10 @@ function maxOffset(offset, windowDimension, imageDimension) {
   return offset < max ? max : offset;
 }
 
-function getOffsetByZoom({ width, height, zoom }, { componentWidth, componentHeight }) {
+function getOffsetByZoom(
+  { width, height, zoom },
+  { componentWidth, componentHeight },
+) {
   const xDiff = componentWidth * zoom - width;
   const yDiff = componentHeight * zoom - height;
 
@@ -43,6 +41,10 @@ function getOffsetByZoom({ width, height, zoom }, { componentWidth, componentHei
     left: -xDiff / 2,
     top: -yDiff / 2,
   };
+}
+
+function isMoveSmall(gesture) {
+  return Math.abs(gesture.dx) < 2 && Math.abs(gesture.dy) < 2;
 }
 
 /**
@@ -67,11 +69,19 @@ export default function makeZoomable(ComponentToBeDecorated) {
       style: PropTypes.object,
       onPress: PropTypes.func,
       onZoom: PropTypes.func,
-    }
+    };
+
+    static defaultProps = {
+      style: {},
+      onPress: () => {},
+      onZoom: () => {},
+    };
 
     constructor(props) {
       super(props);
-      this._onLayout = this._onLayout.bind(this);
+
+      autoBindReact(this);
+
       this.state = {
         zoom: null,
         minZoom: null,
@@ -94,21 +104,28 @@ export default function makeZoomable(ComponentToBeDecorated) {
     }
 
     componentDidMount() {
+      const { onPress, onZoom } = this.props;
+      const { isMoving, isZooming } = this.state;
+
       this._panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onStartShouldSetPanResponderCapture: () => true,
         onMoveShouldSetPanResponder: () => true,
         onMoveShouldSetPanResponderCapture: () => true,
-        onPanResponderGrant: () => { },
+        onPanResponderGrant: () => {},
         onPanResponderMove: (evt, gesture) => {
-          const touches = evt.nativeEvent.touches;
+          const { touches } = evt.nativeEvent;
           const touch1 = touches[0];
           const touch2 = touches[1];
 
           if (touches.length === 2) {
             this.processPinch(touch1, touch2);
-            if (this.props.onZoom) this.props.onZoom();
-          } else if (touches.length === 1 && !this.state.isZooming && !this.isMoveSmall(gesture)) {
+            if (onZoom) onZoom();
+          } else if (
+            touches.length === 1 &&
+            !isZooming &&
+            !isMoveSmall(gesture)
+          ) {
             // Process touch only if touch (move) is very small so that we can ignore it,
             // and consider that small move it isn't panning.
             // small touch will be processed by calling props.onPress()
@@ -122,104 +139,127 @@ export default function makeZoomable(ComponentToBeDecorated) {
         // set false, as with `true`,
         // Modal takes over PanResponder handlers and PanResponder then doesn't work :(
         onPanResponderRelease: () => {
-          if (!this.state.isMoving && !this.state.isZooming && this.props.onPress) {
-            this.props.onPress();
+          if (!isMoving && !isZooming && onPress) {
+            onPress();
           }
           this.setState({
             isZooming: false,
             isMoving: false,
           });
         },
-        onPanResponderTerminate: () => { },
+        onPanResponderTerminate: () => {},
         onShouldBlockNativeResponder: () => true,
       });
     }
 
-    isMoveSmall(gesture) {
-      return Math.abs(gesture.dx) < 2 && Math.abs(gesture.dy) < 2;
-    }
-
     processPinch(touch1, touch2) {
-      const point1 = {
-        x: touch1.pageX,
-        y: touch1.pageY,
-      };
+      const { componentHeight, componentWidth } = this.props;
+      const {
+        height,
+        initialDistance,
+        initialLeftWithoutZoom,
+        initialTopWithoutZoom,
+        initialZoom,
+        isZooming,
+        minZoom,
+        left,
+        top,
+        width,
+        zoom,
+      } = this.state;
 
-      const point2 = {
-        x: touch2.pageX,
-        y: touch2.pageY,
-      };
-
+      const point1 = { x: touch1.pageX, y: touch1.pageY };
+      const point2 = { x: touch2.pageX, y: touch2.pageY };
       const distance = getDistanceBetweenTwoPoints(point1, point2);
       const center = middle2D(point1, point2);
 
-      if (!this.state.isZooming) {
+      if (!isZooming) {
         const offsetByZoom = getOffsetByZoom(this.state, this.props);
         this.setState({
           isZooming: true,
           initialDistance: distance,
           initialX: center.x,
           initialY: center.y,
-          initialTop: this.state.top,
-          initialLeft: this.state.left,
-          initialZoom: this.state.zoom,
-          initialTopWithoutZoom: this.state.top - offsetByZoom.top,
-          initialLeftWithoutZoom: this.state.left - offsetByZoom.left,
+          initialTop: top,
+          initialLeft: left,
+          initialZoom: zoom,
+          initialTopWithoutZoom: top - offsetByZoom.top,
+          initialLeftWithoutZoom: left - offsetByZoom.left,
         });
       } else {
-        const touchZoom = distance / this.state.initialDistance;
-        const zoom = touchZoom * this.state.initialZoom > this.state.minZoom
-          ? touchZoom * this.state.initialZoom : this.state.minZoom;
+        const touchZoom = distance / initialDistance;
+        const newZoom =
+          touchZoom * initialZoom > minZoom ? touchZoom * initialZoom : minZoom;
 
         const offsetByZoom = getOffsetByZoom(this.state, this.props);
-        const left = (this.state.initialLeftWithoutZoom * touchZoom) + offsetByZoom.left;
-        const top = (this.state.initialTopWithoutZoom * touchZoom) + offsetByZoom.top;
+        const newLeft = initialLeftWithoutZoom * touchZoom + offsetByZoom.left;
+        const newTop = initialTopWithoutZoom * touchZoom + offsetByZoom.top;
 
         LayoutAnimation.easeInEaseOut();
         this.setState({
-          zoom,
-          left: left > 0 ? 0 : maxOffset(left, this.state.width, this.props.componentWidth * zoom),
-          top: top > 0 ? 0 : maxOffset(top, this.state.height, this.props.componentHeight * zoom),
+          newZoom,
+          left:
+            newLeft > 0 ? 0 : maxOffset(newLeft, width, componentWidth * zoom),
+          top:
+            newTop > 0 ? 0 : maxOffset(newTop, height, componentHeight * zoom),
         });
       }
     }
 
     processTouch(x, y) {
-      if (!this.state.isMoving) {
+      const { componentHeight, componentWidth } = this.props;
+      const {
+        height,
+        initialLeft,
+        initialTop,
+        initialX,
+        initialY,
+        isMoving,
+        left,
+        top,
+        width,
+        zoom,
+      } = this.state;
+
+      if (!isMoving) {
         this.setState({
           isMoving: true,
           initialX: x,
           initialY: y,
-          initialTop: this.state.top,
-          initialLeft: this.state.left,
+          initialTop: top,
+          initialLeft: left,
         });
       } else {
-        const left = this.state.initialLeft + x - this.state.initialX;
-        const top = this.state.initialTop + y - this.state.initialY;
+        const newLeft = initialLeft + x - initialX;
+        const newTop = initialTop + y - initialY;
 
-        const zoomedWidth = this.props.componentWidth * this.state.zoom;
-        const zoomedHeight = this.props.componentHeight * this.state.zoom;
+        const zoomedWidth = componentWidth * zoom;
+        const zoomedHeight = componentHeight * zoom;
 
         LayoutAnimation.easeInEaseOut();
         this.setState({
-          left: left > 0 ? 0 : maxOffset(left, this.state.width, zoomedWidth),
-          top: top > 0 ? 0 : maxOffset(top, this.state.height, zoomedHeight),
+          left: newLeft > 0 ? 0 : maxOffset(newLeft, width, zoomedWidth),
+          top: newTop > 0 ? 0 : maxOffset(newTop, height, zoomedHeight),
         });
       }
     }
 
     _onLayout(event) {
-      const layout = event.nativeEvent.layout;
+      const { componentHeight, componentWidth } = this.props;
+      const { height, width } = this.state;
+      const {
+        nativeEvent: { layout },
+      } = event;
 
-      if (layout.width === this.state.width && layout.height === this.state.height) {
+      if (layout.width === width && layout.height === height) {
         return;
       }
 
-      const zoom = layout.width / this.props.componentWidth;
-
-      const offsetTop = layout.height > this.props.componentHeight * zoom
-        ? (layout.height - this.props.componentHeight * zoom) / 2
-        : 0;
+      const zoom = layout.width / componentWidth;
+      const offsetTop =
+        layout.height > componentHeight * zoom
+          ? (layout.height - componentHeight * zoom) / 2
+          : 0;
 
       this.setState({
         layoutKnown: true,
@@ -232,7 +272,14 @@ export default function makeZoomable(ComponentToBeDecorated) {
     }
 
     render() {
-      const { style, ...otherProps } = this.props;
+      const {
+        componentHeight,
+        componentWidth,
+        style,
+        ...otherProps
+      } = this.props;
+      const { left, offsetLeft, offsetTop, top, zoom } = this.state;
+
       return (
         <View
           style={style}
@@ -240,13 +287,16 @@ export default function makeZoomable(ComponentToBeDecorated) {
           {...this._panResponder.panHandlers}
         >
           <ComponentToBeDecorated
-            style={[style, {
-              position: 'absolute',
-              top: this.state.offsetTop + this.state.top,
-              left: this.state.offsetLeft + this.state.left,
-              width: this.props.componentWidth * this.state.zoom,
-              height: this.props.componentHeight * this.state.zoom,
-            }]}
+            style={[
+              style,
+              {
+                position: 'absolute',
+                top: offsetTop + top,
+                left: offsetLeft + left,
+                width: componentWidth * zoom,
+                height: componentHeight * zoom,
+              },
+            ]}
             {...otherProps}
           />
         </View>
