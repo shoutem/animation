@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Slide } from './Slide';
-import { DriverShape } from '../../drivers/DriverShape';
+import DriverShape from '../../drivers/DriverShape';
+import Slide from './Slide';
 
 /*
  * SlideOut Component adds slide out effect to its children components.
@@ -28,7 +28,7 @@ import { DriverShape } from '../../drivers/DriverShape';
  * Above code will create scroll dependent slide out of an Image to
  * the top left corner of the screen between scroll position of 100 and 150
  */
-export class SlideOut extends PureComponent {
+export default class SlideOut extends PureComponent {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
@@ -37,7 +37,7 @@ export class SlideOut extends PureComponent {
     /**
      * Components to which an effect will be applied
      */
-    children: PropTypes.node,
+    children: PropTypes.node.isRequired,
     /**
      * pair of [start, end] values from animation driver, how
      * children would slide out
@@ -50,14 +50,14 @@ export class SlideOut extends PureComponent {
     style: PropTypes.object,
   };
 
+  static defaultProps = {
+    inputRange: [0, 1],
+    to: 'top left',
+    style: {},
+  };
+
   render() {
-    const {
-      driver,
-      children,
-      inputRange = [0, 1],
-      style,
-      to,
-    } = this.props;
+    const { driver, children, inputRange, style, to } = this.props;
 
     return (
       <Slide

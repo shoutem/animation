@@ -1,7 +1,7 @@
 [{
   "name": "Gaspar Brasserie",
   "address": "185 Sutter St, San Francisco, CA 94109",
-  "description": "Expect an intimate venue with the ambience of a private club. The mood is casual, the guests sublime.",
+  "description": "Expect an intimate venue with the ambience of a private club. The mood is casual, the guests sublime. Gaspar is a delightful French restaurant in San Francisco’s Financial District that is inspired by the romantic, bustling Paris of old. Located near famed Union Square, our richly-designed interiors make you feel as if you are truly in Paris and provide the perfect setting for enjoying our exquisite classic and modern French fare such as Duck Leg Confit and always popular Steak Frites. Gaspar offers two stories of dining in addition to full bars both upstairs and downstairs and an exclusive room reserved to hold the largest selection of Cognac in San Francisco. In addition to our all day menu, we offer live jazz music on Saturdays.",
   "url": "gasparbrasserie.com",
   "image": { "url": "https://shoutem.github.io/restaurants/restaurant-1.jpg"},
   "mail": "info@gasparbrasserie.com"

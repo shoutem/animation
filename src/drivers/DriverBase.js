@@ -5,7 +5,7 @@ import { Animated } from 'react-native';
  * drivers should extend. This class defines the
  * common interface of all animation drivers.
  */
-export class DriverBase {
+export default class DriverBase {
   constructor() {
     this.value = new Animated.Value(0);
   }

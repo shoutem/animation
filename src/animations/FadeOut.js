@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { View } from './View';
-import { DriverShape } from '../drivers/DriverShape';
+import View from './View';
+import DriverShape from '../drivers/DriverShape';
+
 /*
  * FadeOut Component adds fade out effect to its children components.
  * Connect it to driver and pass the input range to animate it.
@@ -27,7 +28,7 @@ import { DriverShape } from '../drivers/DriverShape';
  * from scroll 100, to scroll 150 where image is opaque at scroll 100,
  * and fully transparent at scroll 150
  */
-export class FadeOut extends PureComponent {
+export default class FadeOut extends PureComponent {
   static propTypes = {
     /**
      * An instance of animation driver, usually ScrollDriver
@@ -36,23 +37,28 @@ export class FadeOut extends PureComponent {
     /**
      * Components to which an effect will be applied
      */
-    children: PropTypes.node,
+    children: PropTypes.node.isRequired,
     /**
      * pair of [start, end] values from animation driver, how
      * children would fade out
      */
     inputRange: PropTypes.array,
     style: PropTypes.object,
-  }
+  };
+
+  static defaultProps = {
+    inputRange: [0, 1],
+    style: {},
+  };
 
   render() {
-    const { driver, children, inputRange = [0, 1], style } = this.props;
+    const { children, driver, inputRange, style } = this.props;
 
     return (
       <View
-        driver={driver}
         animationName="fadeOut"
         animationOptions={{ inputRange }}
+        driver={driver}
         style={style}
       >
         {children}

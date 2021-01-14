@@ -1,8 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Animated } from 'react-native';
+import PropTypes from 'prop-types';
 
-export const DriverShape = PropTypes.shape({
+const driverShape = PropTypes.shape({
   value: PropTypes.instanceOf(Animated.Value),
   interpolate: PropTypes.func,
 });
+
+export default driverShape;

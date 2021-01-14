@@ -1,4 +1,4 @@
-export const animations = {
+export default {
   heroAnimation(driver, { layout }) {
     return {
       transform: [
@@ -8,7 +8,8 @@ export const animations = {
             outputRange: [3, 1],
             extrapolateRight: 'clamp',
           }),
-        }, {
+        },
+        {
           translateY: driver.value.interpolate({
             inputRange: [-100, 100],
             outputRange: [-50, 50],
@@ -18,8 +19,10 @@ export const animations = {
       ],
     };
   },
+
   zoomOutAnimation(driver, { animationOptions }) {
     const { inputRange, maxFactor } = animationOptions;
+
     return {
       transform: [
         {
@@ -32,8 +35,10 @@ export const animations = {
       ],
     };
   },
+
   zoomInAnimation(driver, { animationOptions }) {
     const { inputRange, maxFactor } = animationOptions;
+
     return {
       transform: [
         {
@@ -46,6 +51,7 @@ export const animations = {
       ],
     };
   },
+
   fadeOutAnimation(driver, { animationOptions }) {
     const { inputRange } = animationOptions;
     return {
@@ -56,6 +62,7 @@ export const animations = {
       }),
     };
   },
+
   fadeInAnimation(driver, { animationOptions }) {
     const { inputRange } = animationOptions;
     return {
@@ -66,6 +73,7 @@ export const animations = {
       }),
     };
   },
+
   slideInAnimation(driver, { animationOptions }) {
     const { offset, inputRange } = animationOptions;
     const { x = 0, y = 0 } = offset;
@@ -85,13 +93,15 @@ export const animations = {
             outputRange: [x, 0],
             extrapolate: 'clamp',
           }),
-        }
+        },
       ],
     };
   },
+
   slideOutAnimation(driver, { animationOptions }) {
     const { offset, inputRange } = animationOptions;
     const { x = 0, y = 0 } = offset;
+
     return {
       transform: [
         {
@@ -100,29 +110,27 @@ export const animations = {
             outputRange: [0, y],
             extrapolate: 'clamp',
           }),
-        }, {
+        },
+        {
           translateX: driver.value.interpolate({
             inputRange,
             outputRange: [0, x],
             extrapolate: 'clamp',
           }),
-        }
+        },
       ],
     };
   },
+
   rotateAnimation(driver, { animationOptions }) {
-    const {
-      inputRange,
-      axis = '',
-      angle
-    } = animationOptions;
+    const { inputRange, axis = '', angle } = animationOptions;
 
     return {
       transform: [
         {
           [`rotate${axis.toUpperCase()}`]: driver.value.interpolate({
             inputRange,
-            outputRange: ["0deg", angle],
+            outputRange: ['0deg', angle],
           }),
         },
       ],
