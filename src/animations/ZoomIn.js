@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import DriverShape from '../drivers/DriverShape';
 import View from './View';
+
 /*
  * ZoomIn Component adds zoom in effect to its children components.
  * Connect it to driver and pass the input range to animate it.
