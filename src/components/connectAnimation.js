@@ -130,7 +130,7 @@ export default function connectAnimation(
       /**
        * Animation Driver an instance of driver that will be used to create animated style
        */
-      driver: DriverShape.isRequired,
+      driver: DriverShape,
       /**
        * Component style (could contain animation functions)
        */
