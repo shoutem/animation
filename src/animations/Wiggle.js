@@ -32,10 +32,21 @@ export default class Wiggle extends PureComponent {
 
   render() {
     const { children, style } = this.props;
+    const { interpolateConfig, paddingHorizontal } = style;
+
+    const interpolated = this.animation.interpolate({
+      ...interpolateConfig
+    });
+    const animatedStyle = {
+      paddingHorizontal,
+      transform: [
+        { translateX: interpolated },
+      ]
+    };
 
     return (
       <Animated.View
-        style={style}
+        style={[style, animatedStyle]}
       >
         {children}
       </Animated.View>
