@@ -13,16 +13,13 @@ export default class Wiggle extends PureComponent {
     this.animation = new Animated.Value(0);
   }
 
-  shouldComponentUpdate(nextProps) {
-    const { startAnimation: nextStartAnimation } = nextProps;
+  componentDidUpdate(prevProps) {
+    const { startAnimation: prevStartAnimation } = prevProps;
     const { startAnimation } = this.props;
 
-    if (nextStartAnimation && !startAnimation) {
+    if (!prevStartAnimation && startAnimation) {
       this.triggerAnimation();
-      return true;
     }
-
-    return true;
   }
 
   triggerAnimation() {
