@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import autoBindReact from 'auto-bind/react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Animated, Easing } from 'react-native';
 
@@ -12,18 +13,27 @@ export default class Wiggle extends PureComponent {
     this.animation = new Animated.Value(0);
   }
 
-  componentDidUpdate() {
+  shouldComponentUpdate(nextProps) {
+    const { startAnimation: nextStartAnimation } = nextProps;
     const { startAnimation } = this.props;
 
-    if (startAnimation) {
+    if (nextStartAnimation && !startAnimation) {
       this.triggerAnimation();
+      return true;
     }
+
+    return true;
   }
 
   triggerAnimation() {
+    const { style } = this.props;
+    const duration = _.get(style, 'timingConfig.duration');
+    const inputRange = _.get(style, 'interpolateConfig.inputRange');
+    const toValue = _.last(inputRange);
+
     Animated.timing(this.animation, {
-      duration: 400,
-      toValue: 3,
+      duration,
+      toValue,
       ease: Easing.bounce,
     }).start(() => {
       this.animation.setValue(0);
@@ -35,21 +45,15 @@ export default class Wiggle extends PureComponent {
     const { interpolateConfig, paddingHorizontal } = style;
 
     const interpolated = this.animation.interpolate({
-      ...interpolateConfig
+      ...interpolateConfig,
     });
     const animatedStyle = {
       paddingHorizontal,
-      transform: [
-        { translateX: interpolated },
-      ]
+      transform: [{ translateX: interpolated }],
     };
 
     return (
-      <Animated.View
-        style={[style, animatedStyle]}
-      >
-        {children}
-      </Animated.View>
+      <Animated.View style={[style, animatedStyle]}>{children}</Animated.View>
     );
   }
 }
@@ -58,7 +62,7 @@ Wiggle.propTypes = {
   /**
    * If set to true, triggers animation
    */
-   startAnimation: PropTypes.bool,
+  startAnimation: PropTypes.bool,
   /**
    * Components to which an effect will be applied
    */
