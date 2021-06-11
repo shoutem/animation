@@ -1,6 +1,6 @@
 {
   "name": "@shoutem/animation",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "description": "Shoutem Animation Library",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "dependencies": {
     "auto-bind": "4.0.0",
     "hoist-non-react-statics": "^3.3.2",
-    "lodash": "4.17.19"
+    "lodash": "4.17.21"
   },
   "devDependencies": {
     "@shoutem/eslint-config-react": "^1.0.1",
