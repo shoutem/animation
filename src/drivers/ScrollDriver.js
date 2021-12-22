@@ -26,10 +26,12 @@ import DriverBase from './DriverBase';
  * @param options.nativeScrollEventThrottle Native animated value changes
  *   will be debounced using this value when mirroring them to the JS value.
  *   Used only if `useNativeDriver` is `true`, defaults to 20ms.
+ * @param customOnScroll Function to be executed in tandem with ours.
  */
 export default class ScrollDriver extends DriverBase {
   constructor(
     options = { useNativeDriver: false, nativeScrollEventThrottle: 20 },
+    customOnScroll,
   ) {
     super();
 
@@ -50,7 +52,10 @@ export default class ScrollDriver extends DriverBase {
     this.scrollViewProps = {
       onScroll: Animated.event(
         [{ nativeEvent: { contentOffset: { y: this.primaryValue } } }],
-        { useNativeDriver: options.useNativeDriver },
+        {
+          listener: customOnScroll ? event => customOnScroll(event) : undefined,
+          useNativeDriver: options.useNativeDriver,
+        },
       ),
       scrollEventThrottle: 1,
       onLayout: this.onScrollViewLayout,
