@@ -1,6 +1,6 @@
 {
   "name": "@shoutem/animation",
-  "version": "0.14.1",
+  "version": "0.15.0",
   "description": "Shoutem Animation Library",
   "main": "index.js",
   "scripts": {
@@ -13,18 +13,18 @@
   },
   "dependencies": {
     "auto-bind": "4.0.0",
-    "hoist-non-react-statics": "^3.3.2",
+    "hoist-non-react-statics": "3.3.2",
     "lodash": "4.17.21"
   },
   "devDependencies": {
-    "@shoutem/eslint-config-react": "^1.0.1",
-    "babel-eslint": "^9.0.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jsx-a11y": "^1.3.1",
+    "@shoutem/eslint-config-react": "1.0.6",
+    "babel-eslint": "9.0.0",
+    "eslint": "6.8.0",
+    "eslint-plugin-import": "2.25.4",
+    "eslint-plugin-jsx-a11y": "1.5.5",
     "eslint-plugin-prettier": "3.1.3",
-    "eslint-plugin-react": "^5.1.1",
-    "eslint-plugin-react-native": "~3.6.0",
+    "eslint-plugin-react": "5.2.2",
+    "eslint-plugin-react-native": "3.6.0",
     "prettier": "1.19.1"
   },
   "peerDependencies": {
