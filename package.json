@@ -17,7 +17,7 @@
     "lodash": "4.17.21"
   },
   "devDependencies": {
-    "@shoutem/eslint-config-react": "1.0.6",
+    "@shoutem/eslint-config-react": "~1.0.6",
     "babel-eslint": "9.0.0",
     "eslint": "6.8.0",
     "eslint-plugin-import": "2.25.4",
