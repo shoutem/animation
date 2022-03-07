@@ -9,7 +9,7 @@
 	"dependencies": {
 		"auto-bind": "4.0.0",
 		"react": "16.8.6",
-		"react-native": "0.60.6",
+		"react-native": "0.62.3",
 		"@shoutem/ui": "2.0.3",
 		"@shoutem/animation": "0.12.4",
 		"@shoutem/theme": "0.11.5",
