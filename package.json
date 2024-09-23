@@ -1,6 +1,6 @@
 {
   "name": "@shoutem/animation",
-  "version": "0.15.0",
+  "version": "0.17.0",
   "description": "Shoutem Animation Library",
   "main": "index.js",
   "scripts": {
@@ -18,13 +18,15 @@
   },
   "devDependencies": {
     "@shoutem/eslint-config-react": "~1.0.6",
-    "babel-eslint": "9.0.0",
+    "babel-eslint": "10.1.0",
     "eslint": "6.8.0",
     "eslint-plugin-import": "2.25.4",
-    "eslint-plugin-jsx-a11y": "1.5.5",
+    "eslint-plugin-jsx-a11y": "6.5.1",
     "eslint-plugin-prettier": "3.1.3",
-    "eslint-plugin-react": "5.2.2",
-    "eslint-plugin-react-native": "3.6.0",
+    "eslint-plugin-react": "7.28.0",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "eslint-plugin-react-native": "3.11.0",
+    "eslint-plugin-simple-import-sort": "7.0.0",
     "prettier": "1.19.1"
   },
   "peerDependencies": {
@@ -44,32 +46,20 @@
   "license": "BSD-3-Clause",
   "maintainers": [
     {
-      "email": "bruna.andjelic@gmail.com",
-      "name": "bAndelic"
+      "email": "lucija.tatarevic@shoutem.com",
+      "name": "ltatarev"
     },
     {
-      "email": "belma.dzi@gmail.com",
-      "name": "morrigan"
+      "email": "slavko@shoutem.com",
+      "name": "sstimac"
     },
     {
-      "email": "luka.bracanovic@shoutem.com",
-      "name": "MrBr"
+      "email": "tomislav.arambasic@shoutem.com",
+      "name": "tomislav-arambasic"
     },
     {
-      "email": "ivan@shoutem.com",
-      "name": "SoHotSoup"
-    },
-    {
-      "email": "tomislav.tenodi@shoutem.com",
-      "name": "tenodi"
-    },
-    {
-      "email": "vladimir@shoutem.com",
-      "name": "Vunovati"
-    },
-    {
-      "email": "zeljko@shoutem.com",
-      "name": "zrumenjak"
+      "email": "vlad@definitely-not-vlad.com",
+      "name": "Definitely-Not-Vlad"
     }
   ],
   "eslintConfig": {
@@ -79,5 +69,11 @@
       "ecmaVersion": 6,
       "sourceType": "module"
     }
+  },
+  "prettier": {
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "singleQuote": true,
+    "trailingComma": "all"
   }
 }
