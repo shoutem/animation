@@ -3,6 +3,7 @@ import autoBindReact from 'auto-bind/react';
 import hoistStatics from 'hoist-non-react-statics';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
+import { AnimationDriverContext } from '../drivers/AnimationDriverProvider';
 import { Animated } from 'react-native';
 import DriverShape from '../drivers/DriverShape';
 
@@ -165,14 +166,7 @@ export default function connectAnimation(
       style: {},
     };
 
-    static contextTypes = {
-      animationDriver: DriverShape,
-      transformProps: PropTypes.func,
-    };
-
-    static childContextTypes = {
-      transformProps: PropTypes.func,
-    };
+    static contextType = AnimationDriverContext;
 
     static displayName = `Animated(${componentDisplayName})`;
 
@@ -189,12 +183,6 @@ export default function connectAnimation(
           y: 0,
         },
         resolvedStyle: removeAnimationsFromStyle(props.style),
-      };
-    }
-
-    getChildContext() {
-      return {
-        transformProps: this.transformProps,
       };
     }
 
@@ -253,31 +241,6 @@ export default function connectAnimation(
         prevProps.animationName !== animationName ||
         this.getDriver(prevProps) !== this.getDriver(this.props)
       );
-    }
-
-    /**
-     * A helper function provided to child components that enables
-     * them to get the prop transformations that this component performs.
-     *
-     * @param props The component props to transform.
-     * @returns {*} The transformed props.
-     */
-    transformProps(props) {
-      const { layout } = this.state;
-      const { transformProps } = this.context;
-
-      const sourceProps = transformProps ? transformProps(props) : props;
-
-      return {
-        ...sourceProps,
-        style: resolveAnimatedStyle({
-          props: sourceProps,
-          driver: this.getDriver(sourceProps, this.context),
-          animations,
-          layout,
-          componentName: WrappedComponent.displayName || WrappedComponent.name,
-        }),
-      };
     }
 
     render() {
