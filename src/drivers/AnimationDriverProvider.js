@@ -1,5 +1,10 @@
-import React, { Children, createContext, useCallback, useContext, useState } from 'react';
-import _ from 'lodash';
+import React, {
+  Children,
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import DriverShape from './DriverShape';
 import ScrollDriver from './ScrollDriver';
@@ -9,14 +14,14 @@ export const AnimationDriverContext = createContext({});
 const resolveInitialDriver = (props, context) => {
   if (props.driver) {
     return props.driver;
-  } else if (context.animationDriver) {
-    return context.animationDriver;
-  } else {
-    return new ScrollDriver(
-      { useNativeDriver: true, nativeScrollEventThrottle: 20 },
-      props.onScroll,
-    );
   }
+  if (context.animationDriver) {
+    return context.animationDriver;
+  }
+  return new ScrollDriver(
+    { useNativeDriver: true, nativeScrollEventThrottle: 20 },
+    props.onScroll,
+  );
 };
 
 /**
@@ -25,25 +30,28 @@ const resolveInitialDriver = (props, context) => {
  * between Screen and NavigationBar automatically. ScrollView from @shoutem/ui uses it to
  * register its driver.
  */
-export const AnimationDriverProvider = (props) => {
-  const { onAnimationDriverChange, children } = props;
+export const AnimationDriverProvider = props => {
+  const { children } = props;
   const animationDriverContext = useContext(AnimationDriverContext);
-  const [activeAnimationDriver, setActiveAnimationDriver] = useState(resolveInitialDriver(props, animationDriverContext));
-  const { setAnimationDriver: parentSetAnimationDriver } = animationDriverContext;
+  const [activeAnimationDriver, setActiveAnimationDriver] = useState(
+    resolveInitialDriver(props, animationDriverContext),
+  );
+  const {
+    setAnimationDriver: parentSetAnimationDriver,
+  } = animationDriverContext;
 
-  const setAnimationDriver = useCallback((driver, primaryScrollView) => {
-    if (driver || primaryScrollView) {
-      setActiveAnimationDriver(driver);
-      if (onAnimationDriverChange) {
-        onAnimationDriverChange(driver);
+  const setAnimationDriver = useCallback(
+    (driver, primaryScrollView) => {
+      if (driver || primaryScrollView) {
+        setActiveAnimationDriver(driver);
+
+        if (parentSetAnimationDriver) {
+          parentSetAnimationDriver(driver, primaryScrollView);
+        }
       }
-
-      if (parentSetAnimationDriver) {
-        parentSetAnimationDriver(driver, primaryScrollView);
-      }
-    }
-  }, [onAnimationDriverChange, animationDriverContext]);
-
+    },
+    [animationDriverContext],
+  );
 
   return (
     <AnimationDriverContext.Provider
@@ -55,7 +63,7 @@ export const AnimationDriverProvider = (props) => {
       {children && Children.only(children)}
     </AnimationDriverContext.Provider>
   );
-}
+};
 
 /* eslint-disable react/no-unused-prop-types */
 AnimationDriverProvider.propTypes = {

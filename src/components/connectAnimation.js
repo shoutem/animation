@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
+import { Animated } from 'react-native';
 import autoBindReact from 'auto-bind/react';
 import hoistStatics from 'hoist-non-react-statics';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { AnimationDriverContext } from '../drivers/AnimationDriverProvider';
-import { Animated } from 'react-native';
 import DriverShape from '../drivers/DriverShape';
 
 const ANIMATION_SUFFIX = 'Animation';
@@ -160,6 +160,7 @@ export default function connectAnimation(
     };
 
     static defaultProps = {
+      driver: undefined,
       animation: undefined,
       animationName: undefined,
       animationOptions: {},
