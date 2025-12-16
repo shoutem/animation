@@ -1,6 +1,6 @@
 {
   "name": "@shoutem/animation",
-  "version": "0.17.0",
+  "version": "1.0.0-rc.1",
   "description": "Shoutem Animation Library",
   "main": "index.js",
   "scripts": {
@@ -30,8 +30,8 @@
     "prettier": "1.19.1"
   },
   "peerDependencies": {
-    "react": ">=16.8.6",
-    "react-native": ">=0.60.6",
+    "react": ">=19.0.0",
+    "react-native": ">=0.78.0",
     "prop-types": ">=15.7.2"
   },
   "keywords": [
@@ -46,20 +46,12 @@
   "license": "BSD-3-Clause",
   "maintainers": [
     {
-      "email": "lucija.tatarevic@shoutem.com",
-      "name": "ltatarev"
-    },
-    {
       "email": "slavko@shoutem.com",
       "name": "sstimac"
     },
     {
       "email": "tomislav.arambasic@shoutem.com",
       "name": "tomislav-arambasic"
-    },
-    {
-      "email": "vlad@definitely-not-vlad.com",
-      "name": "Definitely-Not-Vlad"
     }
   ],
   "eslintConfig": {
