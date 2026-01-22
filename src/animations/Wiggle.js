@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
+import { Animated, Easing, Platform } from 'react-native';
 import autoBindReact from 'auto-bind/react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { Animated, Easing, Platform } from 'react-native';
 
+const webHeight = { height: Platform.OS === 'web' ? '100%' : undefined };
 export default class Wiggle extends PureComponent {
   constructor(props) {
     super(props);
@@ -47,11 +48,12 @@ export default class Wiggle extends PureComponent {
     const animatedStyle = {
       paddingHorizontal,
       transform: [{ translateX: interpolated }],
-      ...(Platform.OS === "web" && { height: '100%' })
     };
 
     return (
-      <Animated.View style={[style, animatedStyle]}>{children}</Animated.View>
+      <Animated.View style={[webHeight, style, animatedStyle]}>
+        {children}
+      </Animated.View>
     );
   }
 }
